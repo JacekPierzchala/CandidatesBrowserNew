@@ -22,6 +22,14 @@ namespace CandidatesBrowser2
     {
         public MainWindow()
         {
+            if (App.Args==null)
+            {
+                MessageBox.Show("Please run this application using bat file", "Warning");
+                this.Close();
+               
+
+                return;
+            }
             InitializeComponent();
         }
     }
