@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 
 namespace CandidatesBrowser2
@@ -21,7 +22,12 @@ namespace CandidatesBrowser2
             {
                 Args = e.Args;
             }
-            
+
+
+            SplashScreen sc = new SplashScreen("cv_image.png");
+
+            sc.Show(false, true);
+            sc.Close(TimeSpan.FromMilliseconds(1500));
         }
     }
 }
