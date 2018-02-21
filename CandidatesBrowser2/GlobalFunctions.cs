@@ -8,6 +8,11 @@ using System.Data.SqlClient;
 
 namespace CandidatesBrowser2
 {
+    public enum PcName
+        {
+        Michal,
+        Zaneta
+        }
     class GlobalFunctions
     {
 

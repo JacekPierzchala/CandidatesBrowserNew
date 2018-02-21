@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="600" Width="900">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+
+        <DataGrid Grid.Column="1" x:Name="MainView"  ></DataGrid>
     </Grid>
 </Window>

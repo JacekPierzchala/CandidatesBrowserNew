@@ -15,12 +15,14 @@ namespace CandidatesBrowser2
     public partial class App : Application
     {
         public static String[] Args;
+       
 
          void AppStartUp(object sender, StartupEventArgs e)
         {
             if (e.Args.Length>0)
             {
                 Args = e.Args;
+               
             }
 
 

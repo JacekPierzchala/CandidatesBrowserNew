@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,20 +22,68 @@ namespace CandidatesBrowser2
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
+        public DataTable Candidates;
+        PcName pcmane;
+
         public MainWindow()
         {
-            if (App.Args==null)
-            {
-                MessageBox.Show("Please run this application using bat file", "Warning",MessageBoxButton.OK,MessageBoxImage.Error);
-                this.Close();
-               
 
+            ParseArgs();
+            LoadData();
+
+
+
+            //Thread.Sleep(5000);
+            InitializeComponent();
+
+            MainView.ItemsSource = Candidates.AsDataView();
+        }
+
+        void ParseArgs()
+        {
+            if (App.Args == null)
+            {
+                MessageBox.Show("Please run this application using bat file", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
                 return;
             }
 
-           
-            //Thread.Sleep(5000);
-            InitializeComponent();
+
+            try
+            {
+                pcmane = (PcName)Enum.Parse(typeof(PcName), App.Args[0]);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please run this application using bat file", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+                return;
+            }
+
+
+            switch (pcmane)
+            {
+                case PcName.Michal:
+                    {
+                        GlobalFunctions.connectionString = GlobalFunctions.connectionStringMichal;
+                    }
+                    break;
+
+                case PcName.Zaneta:
+                    {
+                        GlobalFunctions.connectionString = GlobalFunctions.connectionStringZaneta;
+                    }
+                    break;
+            }
+
+        }
+
+        void LoadData()
+        {
+            Candidates = GlobalFunctions.GetTableFromSQL(SQLs.Candidates);
         }
     }
 }
