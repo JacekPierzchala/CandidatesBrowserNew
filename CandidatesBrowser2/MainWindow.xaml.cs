@@ -23,18 +23,13 @@ namespace CandidatesBrowser2
     public partial class MainWindow : Window
     {
 
-
         public DataTable Candidates;
         PcName pcmane;
 
         public MainWindow()
         {
-
             ParseArgs();
             LoadData();
-
-
-
             //Thread.Sleep(5000);
             InitializeComponent();
 
