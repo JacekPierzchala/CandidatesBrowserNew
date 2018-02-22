@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,9 @@ namespace CandidatesBrowser2
     public partial class MainWindow : Window
     {
 
-        public DataTable Candidates;
+        public DataTable CandidatesDT;
+        public ObservableCollection<Candidate> CandidatesCollection=new ObservableCollection<Candidate>();
+
         PcName pcmane;
 
         public MainWindow()
@@ -33,7 +36,7 @@ namespace CandidatesBrowser2
             //Thread.Sleep(5000);
             InitializeComponent();
 
-            MainView.ItemsSource = Candidates.AsDataView();
+            MainView.ItemsSource = CandidatesCollection;
         }
 
         void ParseArgs()
@@ -78,7 +81,24 @@ namespace CandidatesBrowser2
 
         void LoadData()
         {
-            Candidates = GlobalFunctions.GetTableFromSQL(SQLs.Candidates);
+            CandidatesDT = GlobalFunctions.GetTableFromSQL(SQLs.Candidates);
+
+            foreach (DataRow row in CandidatesDT.Rows)
+            {
+                CandidatesCollection.Add
+                    (new Candidate
+                        (
+                        id:int.Parse(row["ID"].ToString()),
+                        firstName: row["FIRST_NAME"].ToString(),
+                        lastName: row["LAST_NAME"].ToString(),
+                        firstEmail: row["1ST_@"].ToString(),
+                        secondEmail: row["2ND_@"].ToString(),
+                        firstPhone: row["1ST_TEL"].ToString(),
+                        secondPhone: row["2ND_TEL"].ToString()
+                        )                  
+                      );
+            }
+
         }
     }
 }
