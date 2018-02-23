@@ -13,16 +13,18 @@
 
         </Grid.ColumnDefinitions>
 
-        <DataGrid  SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="True" Grid.Column="1" x:Name="MainView" AutoGenerateColumns="False"  >
+        <DataGrid Style="{StaticResource ResourceKey=DataGridColumnHeaderStyle}" SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="True" Grid.Column="1" x:Name="MainView" AutoGenerateColumns="False"  >
             <DataGrid.Columns >
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="SizeToCells" >
-             
+                <DataGridTextColumn Binding="{Binding FirstName}" Width="SizeToCells" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock HorizontalAlignment="Stretch">First Name</TextBlock>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="SizeToCells" />
                 <DataGridTextColumn Header="First Email" Binding="{Binding FirstEmail}" Width="SizeToCells" />
                 <DataGridTextColumn Header="Second Email" Binding="{Binding SecondEmail}" Width="SizeToCells" />
                 <DataGridTextColumn Header="First Phone" Binding="{Binding FirstPhone}" Width="SizeToCells" />
-                <DataGridTextColumn Header="Second Phone" Binding="{Binding SecondPhone}" Width="SizeToCells" />
+                <DataGridTextColumn Header="Second Phone" Binding="{Binding SecondPhone}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

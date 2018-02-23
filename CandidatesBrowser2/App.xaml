@@ -4,6 +4,23 @@
              xmlns:local="clr-namespace:CandidatesBrowser2"
              StartupUri="MainWindow.xaml" Startup="AppStartUp">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="Header">
+            
+        </Style>
+        <Style x:Key="DataGridColumnHeaderStyle" TargetType="{x:Type DataGrid}">
+            <!--<Setter Property="ColumnHeaderStyle" Value="">
+                
+            </Setter>-->
+            <Setter Property="ColumnHeaderStyle" Value="{StaticResource Header}"></Setter>
+            <Setter Property="ColumnWidth" Value="*"/>
+            <Setter Property="ColumnWidth" Value="*"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <!--<Setter Property="Height" Value="35" />-->
+            
+            <Setter Property="FontWeight" Value="Black" />
+           
+        </Style>
+        
+        
     </Application.Resources>
 </Application>
