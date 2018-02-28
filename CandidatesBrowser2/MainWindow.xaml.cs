@@ -94,7 +94,9 @@ namespace CandidatesBrowser2
                         firstEmail: row["1ST_@"].ToString(),
                         secondEmail: row["2ND_@"].ToString(),
                         firstPhone: row["1ST_TEL"].ToString(),
-                        secondPhone: row["2ND_TEL"].ToString()
+                        secondPhone: row["2ND_TEL"].ToString(),
+                        attendedProjects: int.Parse(row["ATTENDED_PROJECTS"].ToString()),
+                        isCvReceived: bool.Parse(row["CV_RECEIVED"].ToString())
                         )                  
                       );
             }

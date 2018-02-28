@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="900">
+        Title="MainWindow" Height="600" Width="1100" MaxWidth="1110" MinWidth="1100">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
@@ -13,19 +13,29 @@
 
         </Grid.ColumnDefinitions>
 
-        <DataGrid Style="{StaticResource ResourceKey=DataGridColumnHeaderStyle}" SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="True" Grid.Column="1" x:Name="MainView" AutoGenerateColumns="False"  >
+        <DataGrid x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="True" Grid.Column="1" 
+                   AutoGenerateColumns="False"  >
+            
             <DataGrid.Columns >
-                <DataGridTextColumn Binding="{Binding FirstName}" Width="SizeToCells" >
-                    <DataGridTextColumn.Header>
-                        <TextBlock HorizontalAlignment="Stretch">First Name</TextBlock>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="SizeToCells" />
                 <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="SizeToCells" />
                 <DataGridTextColumn Header="First Email" Binding="{Binding FirstEmail}" Width="SizeToCells" />
                 <DataGridTextColumn Header="Second Email" Binding="{Binding SecondEmail}" Width="SizeToCells" />
                 <DataGridTextColumn Header="First Phone" Binding="{Binding FirstPhone}" Width="SizeToCells" />
                 <DataGridTextColumn Header="Second Phone" Binding="{Binding SecondPhone}" Width="*" />
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text= "{Binding AttendedProjects}"/>
+                        <CheckBox IsChecked="{Binding IsCvReceived}"  />
+                    </StackPanel>
+                    
+                   
+                    
+                </DataTemplate>
+
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </Window>

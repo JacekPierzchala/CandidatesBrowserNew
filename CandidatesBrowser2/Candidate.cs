@@ -15,9 +15,13 @@ namespace CandidatesBrowser2
         public string SecondEmail { get; set; }
         public string FirstPhone { get; set; }
         public string SecondPhone { get; set; }
+        public int AttendedProjects { get; set; }
+        public bool IsCvReceived { get; set; }
 
         public Candidate(int id, string firstName, string lastName,
-                string firstEmail, string secondEmail, string firstPhone, string secondPhone)
+                string firstEmail, string secondEmail, 
+                string firstPhone, string secondPhone,
+                int attendedProjects, bool isCvReceived)
         {
             this.ID = id;
             this.FirstName = firstName;
@@ -26,6 +30,8 @@ namespace CandidatesBrowser2
             this.SecondEmail = secondEmail;
             this.FirstPhone = firstPhone;
             this.SecondPhone = secondPhone;
+            this.AttendedProjects = attendedProjects;
+            this.IsCvReceived = isCvReceived;
         }
 
     }
