@@ -27,8 +27,16 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate >
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text= "{Binding AttendedProjects}"/>
-                        <CheckBox IsChecked="{Binding IsCvReceived}"  />
+                        <Border Margin="1" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Background="Beige" Padding="5" Width="120" Text="{Binding AttendedProjects, StringFormat =Atended Projects: {0}}" ></TextBlock>
+                        </Border>
+                        <Border Margin="1" BorderBrush="Gray" BorderThickness="1">
+                            <CheckBox  Background="Beige" Padding="5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="CV Received?" IsChecked="{Binding IsCvReceived}"></CheckBox>
+                        </Border>
+
+
+
+
                     </StackPanel>
                     
                    
