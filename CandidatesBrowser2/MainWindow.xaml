@@ -1,10 +1,10 @@
 ﻿<Window x:Class="CandidatesBrowser2.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         Title="MainWindow" Height="600" Width="1100" MaxWidth="1110" MinWidth="1100">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
@@ -12,8 +12,12 @@
             <ColumnDefinition></ColumnDefinition>
 
         </Grid.ColumnDefinitions>
-
-        <DataGrid x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="True" Grid.Column="1" 
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid  Grid.Row="0" x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" 
+                   SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False" Grid.Column="1" 
                    AutoGenerateColumns="False"  >
             
             <DataGrid.Columns >
@@ -26,18 +30,29 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate >
-                    <StackPanel Orientation="Horizontal">
-                        <Border Margin="1" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Background="Beige" Padding="5" Width="120" Text="{Binding AttendedProjects, StringFormat =Atended Projects: {0}}" ></TextBlock>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Column="0" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                            <CheckBox Margin="2,10,2,0"  IsHitTestVisible="False"
+                                      Background="Beige" Padding="5" VerticalAlignment="Stretch" HorizontalAlignment="Center"  Content="CV Received?" IsChecked="{Binding IsCvReceived}"></CheckBox>
                         </Border>
-                        <Border Margin="1" BorderBrush="Gray" BorderThickness="1">
-                            <CheckBox  Background="Beige" Padding="5" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="CV Received?" IsChecked="{Binding IsCvReceived}"></CheckBox>
+
+                        <Border Grid.Column="1" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1">
+                            <TextBlock Background="Beige" Padding="5" Width="120" Text="{Binding AttendedProjects, StringFormat =Attended Projects: {0}}" ></TextBlock>
                         </Border>
+                    </Grid>
+                    <!--<StackPanel Orientation="Horizontal">
+                      
+                      
 
-
-
-
-                    </StackPanel>
+        
+                </StackPanel>-->
                     
                    
                     
@@ -45,5 +60,12 @@
 
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
+        
+        <StatusBar Grid.Row="1" Grid.Column="1">
+            <TextBlock Margin="5">Font Size:</TextBlock>
+            <Label Content="{Binding ElementName=FonSizeSlider, Path=Value }" ContentStringFormat="{}{0:#}"></Label>
+            <Slider Width="100" Minimum="10" Maximum="15" x:Name="FonSizeSlider" Value="{Binding ElementName=MainView, Path=FontSize}"></Slider>
+        </StatusBar>
     </Grid>
+    
 </Window>
