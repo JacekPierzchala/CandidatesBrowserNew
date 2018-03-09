@@ -35,4 +35,23 @@ namespace CandidatesBrowser2
         }
 
     }
+
+    public class Status
+    {
+        public int ID { get; set; }
+        public string Description { get; set; }
+        public string Definition { get; set; }
+        public bool Deleted { get; set; }
+
+        public Status(int id,string description, string definition, bool deleted)
+        {
+            this.ID = id;
+            this.Description = description;
+            this.Definition = definition;
+            this.Deleted = deleted;
+        }
+        
+    }
+
+
 }

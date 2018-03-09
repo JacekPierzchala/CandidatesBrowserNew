@@ -36,6 +36,7 @@
         
         <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
             <!--<Setter Property="AlternatingRowBackground" Value="BurlyWood" />-->
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
             <Setter Property="CanUserResizeRows" Value="False"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -59,6 +60,7 @@
         
         <Style x:Key="DataGridStyleRow" TargetType="{x:Type DataGridRow}">
             <Setter Property="SnapsToDevicePixels" Value="true"/>
+            
             <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
             <Setter Property="Background" Value="AliceBlue"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>

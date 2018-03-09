@@ -8,6 +8,8 @@ namespace CandidatesBrowser2
 {
     class SQLs
     {
+
+        #region CandidatesInitialView
         public static string Candidates =
             @"
             IF OBJECT_ID('tempdb.dbo.#CAND', 'U') IS NOT NULL DROP TABLE #CAND; 
@@ -37,5 +39,13 @@ namespace CandidatesBrowser2
              ELSE 0 END) AS BIT) CV_RECEIVED
          FROM #CAND INNER JOIN #PROJECTS ON #CAND.ID=#PROJECTS.CANDIDATE_ID
 			        LEFT JOIN #CV_REC ON #CAND.ID=#CV_REC.CANDIDATE_ID";
+
+        #endregion
+
+        #region Statuses
+        public static string Statuses = @"SELECT  [ID],[DESCRIPTION],[DEFINITION],[DELETED]
+                                        FROM CONFIG_STATUS_LIB ORDER BY DESCRIPTION";
+
+        #endregion
     }
 }

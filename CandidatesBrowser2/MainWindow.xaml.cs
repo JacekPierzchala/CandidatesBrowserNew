@@ -26,6 +26,8 @@ namespace CandidatesBrowser2
 
         public DataTable CandidatesDT;
         public ObservableCollection<Candidate> CandidatesCollection=new ObservableCollection<Candidate>();
+        public DataTable StatusesDT;
+        public ObservableCollection<Status> StatusCollection = new ObservableCollection<Status>();
 
         PcName pcmane;
 
@@ -33,10 +35,11 @@ namespace CandidatesBrowser2
         {
             ParseArgs();
             LoadData();
-            //Thread.Sleep(5000);
+  
             InitializeComponent();
 
             MainView.ItemsSource = CandidatesCollection;
+            StatusCombo.ItemsSource = StatusCollection;
         }
 
         void ParseArgs()
@@ -81,12 +84,13 @@ namespace CandidatesBrowser2
 
         void LoadData()
         {
+            #region CandidatesDT
             CandidatesDT = GlobalFunctions.GetTableFromSQL(SQLs.Candidates);
-
             foreach (DataRow row in CandidatesDT.Rows)
             {
                 CandidatesCollection.Add
-                    (new Candidate
+                    (
+                    new Candidate
                         (
                         id:int.Parse(row["ID"].ToString()),
                         firstName: row["FIRST_NAME"].ToString(),
@@ -101,6 +105,27 @@ namespace CandidatesBrowser2
                       );
             }
 
+            #endregion
+
+
+
+            #region Status
+
+            StatusesDT = GlobalFunctions.GetTableFromSQL(SQLs.Statuses);
+
+            foreach(DataRow row in StatusesDT.Rows)
+            {
+                StatusCollection.Add
+                    (
+                    new Status(
+                                id: int.Parse(row["ID"].ToString()),
+                                description: row["DESCRIPTION"].ToString(),
+                                definition: row["DEFINITION"].ToString(),
+                                deleted: bool.Parse(row["DELETED"].ToString())
+                               )
+                     );
+            }
+            #endregion
         }
     }
 }
