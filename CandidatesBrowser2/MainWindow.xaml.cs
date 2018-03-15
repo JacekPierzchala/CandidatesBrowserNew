@@ -28,6 +28,8 @@ namespace CandidatesBrowser2
         public ObservableCollection<Candidate> CandidatesCollection=new ObservableCollection<Candidate>();
         public DataTable StatusesDT;
         public ObservableCollection<Status> StatusCollection = new ObservableCollection<Status>();
+        public DataTable ProjectsDT;
+        public ObservableCollection<Project> ProjectsCollection = new ObservableCollection<Project>();
 
         PcName pcmane;
 
@@ -107,10 +109,7 @@ namespace CandidatesBrowser2
 
             #endregion
 
-
-
             #region Status
-
             StatusesDT = GlobalFunctions.GetTableFromSQL(SQLs.Statuses);
 
             foreach(DataRow row in StatusesDT.Rows)
@@ -125,6 +124,23 @@ namespace CandidatesBrowser2
                                )
                      );
             }
+            #endregion
+
+            #region Projects
+            ProjectsDT = GlobalFunctions.GetTableFromSQL(SQLs.Projects);
+            foreach (DataRow row in ProjectsDT.Rows)
+            {
+                ProjectsCollection.Add
+                    (
+                    new Project(
+                                id: int.Parse(row["ID"].ToString()),
+                                ProjectName: row["PROJECT_NAME"].ToString()
+                                
+                               )
+                     );
+            }
+
+
             #endregion
         }
     }

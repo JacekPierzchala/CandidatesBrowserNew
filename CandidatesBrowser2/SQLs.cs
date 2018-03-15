@@ -47,5 +47,21 @@ namespace CandidatesBrowser2
                                         FROM CONFIG_STATUS_LIB ORDER BY DESCRIPTION";
 
         #endregion
+
+        #region Area
+        public static string Area = @"SELECT [ID],[AREA_NAME]
+                                    FROM [CONFIG_AREA]";
+
+        #endregion
+
+        #region Projects
+        public static string Projects = @"SELECT [ID],[PROJECT_NAME]
+                                          FROM [CONFIG_PROJECT]";
+        #endregion
+
+        #region Group
+        public static string Groups = @"SELECT  [ID],[NAME]
+                                        FROM [CONFIG_GROUP]";
+        #endregion
     }
 }

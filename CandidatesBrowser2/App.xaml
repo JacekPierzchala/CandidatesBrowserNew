@@ -4,17 +4,14 @@
              xmlns:local="clr-namespace:CandidatesBrowser2"
              StartupUri="MainWindow.xaml" Startup="AppStartUp">
     <Application.Resources>
-        <Style x:Key="ColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
-            <Setter Property="Width" Value="5" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Cursor" Value="SizeWE" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" />
-                    </ControlTemplate>
-                </Setter.Value>
+        <Style TargetType="{x:Type ListView}" x:Key="ListCheckBoxStyle">
+            <Setter Property="Background" Value="Aquamarine"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="ItemTemplate" Value="{Binding}">
+                
             </Setter>
+
+
         </Style>
         
         
@@ -22,10 +19,9 @@
         <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="HeaderStyle">
             <!--<Setter Property="Background" Value="AliceBlue"/>
             <Setter Property="BorderBrush" Value="Black"/>-->
-            <Setter Property="Background" Value="{DynamicResource NormalBorderBrush}"/>
-            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-            <Setter Property="BorderThickness" Value="0.5"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
+         
+            <!--<Setter Property="BorderThickness" Value="0.1"/>-->
+            <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="SeparatorBrush" Value="#FFC9CACA" />
             <!--<Setter Property="FontSize" Value="11"/>-->
             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -42,7 +38,7 @@
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
             <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-            <Setter Property="Margin" Value="5"/>
+            <!--<Setter Property="Margin" Value="2"/>-->
             <Setter Property="IsReadOnly" Value="True" />
             <Setter Property="ColumnHeaderStyle" Value="{StaticResource HeaderStyle}"/>
             <Setter Property="HorizontalContentAlignment" Value="Center" />

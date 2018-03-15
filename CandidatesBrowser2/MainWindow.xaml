@@ -21,17 +21,20 @@
         </Grid.RowDefinitions>
         
         <WrapPanel Margin="5" Grid.Column="0" Background="BlanchedAlmond" Orientation="Vertical">
-            <TextBlock Padding="1" Text="Status"></TextBlock>
-            <Border CornerRadius="50" BorderThickness="1" >
-                <Expander Background="Aquamarine">
-                    <ListBox  Width="280" x:Name="StatusCombo" Margin="5" 
-                    HorizontalContentAlignment="Stretch"   >
+            <Label  Padding="1" Content="Status"></Label>
+            <Border CornerRadius="100" BorderThickness="1" >
+                <Expander >
+                    <ListBox Background="Azure" Width="280" x:Name="StatusCombo" Margin="2" 
+                    HorizontalContentAlignment="Stretch"  SelectionMode="Extended" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-
-                                <CheckBox x:Name="ChckBox" IsChecked="{Binding IsChecked}" >
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding Path=Description}"></TextBlock>
-                                </CheckBox>
+                                
+                                    <!--<CheckBox x:Name="ChckBox" IsChecked="{Binding IsChecked}" >-->
+                                        <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=Description}"></TextBlock>
+                                    <!--</CheckBox>-->
+                                    
+                                
+                             
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

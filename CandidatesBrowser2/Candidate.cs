@@ -53,5 +53,15 @@ namespace CandidatesBrowser2
         
     }
 
+    public class Project
+    {
+        public int ID { get; set; }
+        public string ProjectName { get; set; }
 
+        public Project(int id, string ProjectName)
+        {
+            this.ID = id;
+            this.ProjectName = ProjectName;
+        }
+    }
 }
