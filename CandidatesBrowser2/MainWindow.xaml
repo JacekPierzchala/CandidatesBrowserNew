@@ -73,11 +73,13 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Column="0" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                             <CheckBox Margin="2,10,2,0"  IsHitTestVisible="False"
-                                      Background="Beige" Padding="5" VerticalAlignment="Stretch" HorizontalAlignment="Center"  Content="CV Received?" IsChecked="{Binding IsCvReceived}"></CheckBox>
+                                      Background="Beige" Padding="5" VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                                      Content="CV Received?" IsChecked="{Binding IsCvReceived}"></CheckBox>
                         </Border>
 
                         <Border Grid.Column="1" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Background="Beige" Padding="5" Width="120" Text="{Binding AttendedProjects, StringFormat =Attended Projects: {0}}" ></TextBlock>
+                            <TextBlock Background="Beige" Padding="5" TextWrapping="Wrap"
+                                       Width="120" Text="{Binding AttendedProjects, StringFormat =Attended Projects: {0}}" ></TextBlock>
                         </Border>
                     </Grid>
                     <!--<StackPanel Orientation="Horizontal">
