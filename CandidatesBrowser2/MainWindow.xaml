@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="MainWindow" Height="600" Width="1100" MaxWidth="1110" MinWidth="1100">
+        Title="MainWindow" Height="800" Width="1100" MaxWidth="1110" MinWidth="1100">
     <Window.Resources>
         
     </Window.Resources>
@@ -20,34 +20,45 @@
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <WrapPanel Margin="5" Grid.Column="0" Background="BlanchedAlmond" Orientation="Vertical">
-            <Label  Padding="1" Content="Status"></Label>
+        <WrapPanel Margin="5" Grid.Column="0" Background="BlanchedAlmond" Orientation="Vertical" Grid.RowSpan="2">
+            <Border CornerRadius="100" BorderThickness="1">
+                <Label  Padding="1" Content="Status:" Background="Khaki"></Label>  
+            </Border>
+          
             <Border CornerRadius="100" BorderThickness="1" >
-                <Expander >
-                    <ListBox Background="Azure" Width="280" x:Name="StatusCombo" Margin="2" 
-                    HorizontalContentAlignment="Stretch"  SelectionMode="Extended" >
+                <Expander Background="CadetBlue" Width="280">
+                    <ListBox  Width="280" x:Name="StatusCombo" Style="{StaticResource ListCheckBoxStyle}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                
-                                    <!--<CheckBox x:Name="ChckBox" IsChecked="{Binding IsChecked}" >-->
-                                        <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=Description}"></TextBlock>
-                                    <!--</CheckBox>-->
-                                    
-                                
-                             
+                                <!--<CheckBox x:Name="ChckBox" IsChecked="{Binding IsChecked}" >-->
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=Description}"></TextBlock>
+                                <!--</CheckBox>-->
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Expander>
+            </Border>
+
+            <Border CornerRadius="100" BorderThickness="1">
+                <Label Padding="1" Content="Area:"  Background="Khaki" ></Label>
+            </Border>
                
+            <Border CornerRadius="100" BorderThickness="1" >
+                <Expander  Background="CadetBlue" Width="280">
+                    <ListBox Style="{StaticResource ListCheckBoxStyle}" x:Name="AreaCombo" Width="280">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=AreaName}"></TextBlock>
+                            </DataTemplate>
+
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+
+                </Expander>
 
             </Border>
-            <TextBlock Padding="1" Text="Status"></TextBlock>
-            <Expander>
-                <CheckBox></CheckBox>
-                
-                
-            </Expander>
+         
         </WrapPanel>
         <DataGrid  Grid.Row="0" Grid.Column="1"  x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" 
                    SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False" 

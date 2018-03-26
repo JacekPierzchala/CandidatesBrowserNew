@@ -4,14 +4,11 @@
              xmlns:local="clr-namespace:CandidatesBrowser2"
              StartupUri="MainWindow.xaml" Startup="AppStartUp">
     <Application.Resources>
-        <Style TargetType="{x:Type ListView}" x:Key="ListCheckBoxStyle">
-            <Setter Property="Background" Value="Aquamarine"/>
+        <Style TargetType="{x:Type ListBox}" x:Key="ListCheckBoxStyle">
+            <Setter Property="Background" Value="Azure"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="ItemTemplate" Value="{Binding}">
-                
-            </Setter>
-
-
+            <Setter Property="SelectionMode" Value="Extended"/>
+            <Setter Property="Margin" Value="2"/>
         </Style>
         
         

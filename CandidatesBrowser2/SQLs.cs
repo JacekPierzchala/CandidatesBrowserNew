@@ -54,9 +54,18 @@ namespace CandidatesBrowser2
 
         #endregion
 
-        #region Projects
+        #region ProjectsLib
         public static string Projects = @"SELECT [ID],[PROJECT_NAME]
-                                          FROM [CONFIG_PROJECT]";
+                                          FROM [CONFIG_PROJECT_LIB]";
+        #endregion
+
+        #region ProjectGroup
+        public static string ProjectGroup = @"SELECT     dbo.CONFIG_PROJECT.ID, dbo.CONFIG_PROJECT.CONFIG_PROJECT_LIB, dbo.CONFIG_PROJECT.CONFIG_AREA_ID, 
+                       dbo.CONFIG_PROJECT.CONFIG_GROUP_ID
+                       FROM         dbo.CONFIG_PROJECT INNER JOIN
+                      dbo.CONFIG_PROJECT_LIB ON dbo.CONFIG_PROJECT.CONFIG_PROJECT_LIB = dbo.CONFIG_PROJECT_LIB.ID INNER JOIN
+                      dbo.CONFIG_GROUP ON dbo.CONFIG_PROJECT.CONFIG_GROUP_ID = dbo.CONFIG_GROUP.ID INNER JOIN
+                      dbo.CONFIG_AREA ON dbo.CONFIG_PROJECT.CONFIG_AREA_ID = dbo.CONFIG_AREA.ID";
         #endregion
 
         #region Group

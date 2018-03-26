@@ -36,6 +36,18 @@ namespace CandidatesBrowser2
 
     }
 
+    public class Area
+    {
+        public int Id { get; set; }
+        public string AreaName { get; set; }
+
+        public Area(int id, string areaName)
+        {
+            this.Id = id;
+            this.AreaName = areaName;
+        }
+    }
+
     public class Status
     {
         public int ID { get; set; }
@@ -62,6 +74,23 @@ namespace CandidatesBrowser2
         {
             this.ID = id;
             this.ProjectName = ProjectName;
+        }
+    }
+
+    public class ProjectGroup
+    {
+        public int ID { get; set; }
+        public int ConfigProjectLibID { get; set; }
+        public int ConfigGroupID { get; set; }
+        public int ConfigAreaID { get; set; }
+
+        public ProjectGroup(int id, int ConfigProjectLibID, int ConfigGroupID, int ConfigAreaID)
+        {
+            this.ID = id;
+            this.ConfigAreaID = ConfigAreaID;
+            this.ConfigGroupID = ConfigGroupID;
+            this.ConfigProjectLibID = ConfigProjectLibID;
+
         }
     }
 }

@@ -23,15 +23,20 @@ namespace CandidatesBrowser2
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        #region Collections
         public DataTable CandidatesDT;
         public ObservableCollection<Candidate> CandidatesCollection=new ObservableCollection<Candidate>();
         public DataTable StatusesDT;
         public ObservableCollection<Status> StatusCollection = new ObservableCollection<Status>();
         public DataTable ProjectsDT;
         public ObservableCollection<Project> ProjectsCollection = new ObservableCollection<Project>();
+        public DataTable ProjectsGroupDT;
+        public ObservableCollection<ProjectGroup> ProjectGroupCollection = new ObservableCollection<ProjectGroup>();
+        public DataTable AreaDT;
+        public ObservableCollection<Area> AreaCollection = new ObservableCollection<Area>();
 
         PcName pcmane;
+        #endregion
 
         public MainWindow()
         {
@@ -42,6 +47,7 @@ namespace CandidatesBrowser2
 
             MainView.ItemsSource = CandidatesCollection;
             StatusCombo.ItemsSource = StatusCollection;
+            AreaCombo.ItemsSource = AreaCollection;
         }
 
         void ParseArgs()
@@ -140,6 +146,41 @@ namespace CandidatesBrowser2
                      );
             }
 
+
+            #endregion
+
+            #region ProjectsGroup
+            ProjectsGroupDT = GlobalFunctions.GetTableFromSQL(SQLs.ProjectGroup);
+
+            foreach (DataRow row in ProjectsGroupDT.Rows)
+            {
+                ProjectGroupCollection.Add
+                    (
+                    new ProjectGroup(
+                                id: int.Parse(row["ID"].ToString()),
+                                ConfigProjectLibID: int.Parse(row["CONFIG_PROJECT_LIB"].ToString()),
+                                ConfigGroupID: int.Parse(row["CONFIG_GROUP_ID"].ToString()),
+                                ConfigAreaID: int.Parse(row["CONFIG_AREA_ID"].ToString())
+
+                               )
+                     );
+            }
+
+            #endregion
+
+            #region Area
+            AreaDT = GlobalFunctions.GetTableFromSQL(SQLs.Area);
+
+            foreach (DataRow row in AreaDT.Rows)
+            {
+                AreaCollection.Add
+                    (
+                    new Area(
+                             id: int.Parse(row["ID"].ToString()),
+                             areaName: row["AREA_NAME"].ToString()
+                             )
+                     );
+            }
 
             #endregion
         }
