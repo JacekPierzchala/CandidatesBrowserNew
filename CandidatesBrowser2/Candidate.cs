@@ -93,4 +93,16 @@ namespace CandidatesBrowser2
 
         }
     }
+
+    public class Group
+    {
+        public int id { get; set; }
+        public string Name { get; set; }
+
+        public Group(int id,string name)
+        {
+            this.id = id;
+            this.Name = name;
+        }
+    }
 }

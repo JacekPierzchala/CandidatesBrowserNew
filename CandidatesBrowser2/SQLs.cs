@@ -50,13 +50,13 @@ namespace CandidatesBrowser2
 
         #region Area
         public static string Area = @"SELECT [ID],[AREA_NAME]
-                                    FROM [CONFIG_AREA]";
+                                    FROM [CONFIG_AREA] ORDER BY AREA_NAME";
 
         #endregion
 
         #region ProjectsLib
         public static string Projects = @"SELECT [ID],[PROJECT_NAME]
-                                          FROM [CONFIG_PROJECT_LIB]";
+                                          FROM [CONFIG_PROJECT_LIB] ORDER BY PROJECT_NAME";
         #endregion
 
         #region ProjectGroup
@@ -70,7 +70,7 @@ namespace CandidatesBrowser2
 
         #region Group
         public static string Groups = @"SELECT  [ID],[NAME]
-                                        FROM [CONFIG_GROUP]";
+                                        FROM [CONFIG_GROUP] ORDER BY NAME";
         #endregion
     }
 }

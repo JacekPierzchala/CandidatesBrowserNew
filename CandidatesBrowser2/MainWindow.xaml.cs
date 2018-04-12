@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace CandidatesBrowser2
 {
     /// <summary>
@@ -34,6 +35,8 @@ namespace CandidatesBrowser2
         public ObservableCollection<ProjectGroup> ProjectGroupCollection = new ObservableCollection<ProjectGroup>();
         public DataTable AreaDT;
         public ObservableCollection<Area> AreaCollection = new ObservableCollection<Area>();
+        public DataTable GroupDT;
+        public ObservableCollection<Group> GroupCollection = new ObservableCollection<Group>();
 
         PcName pcmane;
         #endregion
@@ -48,6 +51,8 @@ namespace CandidatesBrowser2
             MainView.ItemsSource = CandidatesCollection;
             StatusCombo.ItemsSource = StatusCollection;
             AreaCombo.ItemsSource = AreaCollection;
+            ProjectList.ItemsSource = ProjectsCollection;
+            GroupList.ItemsSource = GroupCollection;
         }
 
         void ParseArgs()
@@ -183,6 +188,33 @@ namespace CandidatesBrowser2
             }
 
             #endregion
+
+            #region
+
+            GroupDT = GlobalFunctions.GetTableFromSQL(SQLs.Groups);
+
+            foreach (DataRow row in GroupDT.Rows)
+            {
+                GroupCollection.Add(
+                    new Group (
+                    id: int.Parse(row["ID"].ToString()),
+                    name: row["NAME"].ToString()
+                                )
+                                );
+            }
+
+            #endregion
+        }
+
+        private void ProjectInPutText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ChangeProjectList(((TextBox)sender).Text.ToString());
+        }
+
+        public  void ChangeProjectList(string text)
+        {        
+            ObservableCollection<Project> ProjectsCollectionFiltered = new ObservableCollection<Project>(ProjectsCollection.Where(Project => Project.ProjectName.ToLower().StartsWith(text.ToLower())).ToList());           
+            ProjectList.ItemsSource = ProjectsCollectionFiltered;
         }
     }
 }

@@ -4,13 +4,43 @@
              xmlns:local="clr-namespace:CandidatesBrowser2"
              StartupUri="MainWindow.xaml" Startup="AppStartUp">
     <Application.Resources>
-        <Style TargetType="{x:Type ListBox}" x:Key="ListCheckBoxStyle">
+        <Style TargetType="{x:Type ListView}" x:Key="ListCheckBoxStyle">
             <Setter Property="Background" Value="Azure"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="SelectionMode" Value="Extended"/>
             <Setter Property="Margin" Value="2"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+         
         </Style>
-        
+
+        <ControlTemplate x:Key="LabelTemplate" TargetType="{x:Type Label}">
+            <Border CornerRadius="100" BorderThickness="1">
+                <Label Padding="1"  Content="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Content}" Background="Khaki" ></Label>
+            </Border>
+           
+        </ControlTemplate>
+
+        <!--<ControlTemplate x:Key="Listview"  TargetType="{x:Type ListView}">
+            <Border CornerRadius="100" BorderThickness="3" >
+                <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}">
+                    <ListView>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox >
+                                    <TextBlock >
+                                        <ContentPresenter Content="{Binding RelativeSource={RelativeSource Self}}"></ContentPresenter>
+                                    </TextBlock>
+                                </CheckBox>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                </Expander>
+                
+            </Border>
+            
+        </ControlTemplate>-->
         
         
         <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="HeaderStyle">
