@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -182,7 +183,8 @@ namespace CandidatesBrowser2
                     (
                     new Area(
                              id: int.Parse(row["ID"].ToString()),
-                             areaName: row["AREA_NAME"].ToString()
+                             areaName: row["AREA_NAME"].ToString(),
+                             isChecked: true
                              )
                      );
             }
@@ -216,5 +218,41 @@ namespace CandidatesBrowser2
             ObservableCollection<Project> ProjectsCollectionFiltered = new ObservableCollection<Project>(ProjectsCollection.Where(Project => Project.ProjectName.ToLower().StartsWith(text.ToLower())).ToList());           
             ProjectList.ItemsSource = ProjectsCollectionFiltered;
         }
+
+      
+        
+
+      
+        private void AreaChckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            string x = "";
+            AreaColection_Change();
+        }
+
+        private void AreaChckBox_Click(object sender, RoutedEventArgs e)
+        {
+            AreaColection_Change();
+        }
+
+       
+        public void AreaColection_Change()
+        {
+            ObservableCollection<Area> AreaFiltered = new ObservableCollection<Area>();
+            foreach (Area item in AreaCombo.Items )
+            {
+               if(item.IsChecked)
+                {
+                    AreaFiltered.Add(item);
+                }
+            }
+
+            //ObservableCollection<Project> ProjectFiltered = new ObservableCollection<Project>(ProjectsCollection.Join();
+
+
+            string x = "";
+
+        }
+
+
     }
 }

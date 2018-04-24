@@ -4,14 +4,13 @@
              xmlns:local="clr-namespace:CandidatesBrowser2"
              StartupUri="MainWindow.xaml" Startup="AppStartUp">
     <Application.Resources>
-        <Style TargetType="{x:Type ListView}" x:Key="ListCheckBoxStyle">
+        <Style TargetType="{x:Type ListBox}" x:Key="ListCheckBoxStyle">
             <Setter Property="Background" Value="Azure"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="SelectionMode" Value="Extended"/>
             <Setter Property="Margin" Value="2"/>
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-         
         </Style>
 
         <ControlTemplate x:Key="LabelTemplate" TargetType="{x:Type Label}">
