@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="MainWindow" Height="900" Width="1100" MaxWidth="1110" MinWidth="1100">
+        Title="MainWindow" Height="700" Width="1100" MaxWidth="1110" MinWidth="1100">
     <Window.Resources>
         
     </Window.Resources>
@@ -22,23 +22,43 @@
         
         <StackPanel Margin="2" Grid.Column="0" Background="BlanchedAlmond" Orientation="Vertical" Grid.RowSpan="2">
             <Border CornerRadius="100" BorderThickness="3"  Width="300">
-                <Button Margin="2"  >dd</Button>
+                <Button Margin="2" x:Name="searchButton" Click="searchButton_Click">Search</Button>
             </Border>
-            
+            <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="150" x:Name="FirstNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
+                    <Label>FirstName</Label>
+                   
+                </StackPanel>
+            </Border>
+
+            <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="150" x:Name="LastNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
+                    <Label>LastName</Label>
+                    
+                </StackPanel>
+            </Border>
+            <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Width="150" x:Name="Positiontxt" Style="{StaticResource TextBoxStyle}"></TextBox>
+                    <Label>Position</Label>
+                </StackPanel>
+            </Border>
+         
+         
             <Label  Padding="1" Content="Status:" Template="{StaticResource LabelTemplate}"></Label>
-
-
             <Border CornerRadius="100" BorderThickness="3"  Width="300">
                 <Expander Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="StatusSelectAllCheckbox" IsChecked="True"></CheckBox>
+                            <CheckBox VerticalAlignment="Center" x:Name="StatusSelectAllCheckbox" IsChecked="True" Click="StatusSelectAllCheckbox_Click"></CheckBox>
                         </StackPanel>
                         <ListBox Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" x:Name="StatusCombo" Style="{StaticResource ListCheckBoxStyle}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox x:Name="ChckBox" IsChecked="{Binding ElementName=StatusSelectAllCheckbox,Path=IsChecked, Mode=OneWay}" >
+                                    <CheckBox x:Name="ChckBox" IsChecked="{Binding Path=IsChecked}" >
                                         <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=Description}"></TextBlock>
                                     </CheckBox>
                                 </DataTemplate>
@@ -51,22 +71,22 @@
 
 
             <Label  Content="Area:"  Template="{StaticResource LabelTemplate}"/>
-
             <Border CornerRadius="100" BorderThickness="3" Width="300" >
                 <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" Margin="1,0,-1,0">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="AreaSelectAllCheckbox" IsChecked="True"></CheckBox>
+                            <CheckBox VerticalAlignment="Center" x:Name="AreaSelectAllCheckbox" IsChecked="True" Click="AreaSelectAllCheckbox_Click">
+                               
+                            </CheckBox>
                         </StackPanel>
                         <ListBox Style="{StaticResource ListCheckBoxStyle}" 
                                  x:Name="AreaCombo" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox x:Name="AreaChckBox" Click="AreaChckBox_Click"   Checked="AreaChckBox_Checked" 
+                                    <CheckBox x:Name="AreaChckBox" Click="AreaChckBox_Click" 
                                                 IsChecked="{Binding Path=IsChecked}">
-                                              <!--IsChecked="{Binding ElementName=AreaSelectAllCheckbox,Path=IsChecked, Mode=OneWay}"-->
-                                      
+
                                         <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=AreaName}"></TextBlock>
                                     </CheckBox>
                                 </DataTemplate>
@@ -77,21 +97,21 @@
                     
                 </Expander>
             </Border>
+
             <Label  Padding="1" Content="Group:" Template="{StaticResource LabelTemplate}">
-                
             </Label>
             <Border CornerRadius="100" BorderThickness="3" Width="300">
                 <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="GroupSelectAllCheckbox" IsChecked="True"></CheckBox>
+                            <CheckBox VerticalAlignment="Center" x:Name="GroupSelectAllCheckbox" IsChecked="True" Click="GroupSelectAllCheckbox_Click"></CheckBox>
                         </StackPanel>
 
                         <ListBox   x:Name="GroupList"  Style="{StaticResource ListCheckBoxStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding Path=Name}"  IsChecked="{Binding ElementName=GroupSelectAllCheckbox, Path=IsChecked, Mode=OneWay}"/>
+                                    <CheckBox Content="{Binding Path=Name}"  IsChecked="{Binding Path=IsChecked}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -99,21 +119,20 @@
                    
                 </Expander>
             </Border>
-            <Label  Padding="1" Content="Project:" Template="{StaticResource LabelTemplate}"/>
-            
 
+            <Label  Padding="1" Content="Project:" Template="{StaticResource LabelTemplate}"/>
             <Border CornerRadius="100" BorderThickness="3" Width="300">
                 <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBox Padding="1" Margin="1" x:Name="ProjectInPutText"  Width="150" HorizontalAlignment="Left" TextChanged="ProjectInPutText_TextChanged"></TextBox>
+                            <TextBox Style="{StaticResource TextBoxStyle}" x:Name="ProjectInPutText"  Width="150"  TextChanged="ProjectInPutText_TextChanged"></TextBox>
                             <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="ProjectSelectAllCheckbox" IsChecked="True"></CheckBox>
+                            <CheckBox VerticalAlignment="Center" x:Name="ProjectSelectAllCheckbox" IsChecked="True" Click="ProjectSelectAllCheckbox_Click"></CheckBox>
                         </StackPanel>
                         <ListBox   x:Name="ProjectList"  Style="{StaticResource ListCheckBoxStyle}" Height="400">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding Path=ProjectName}" IsChecked="{Binding ElementName=ProjectSelectAllCheckbox, Path=IsChecked, Mode=OneWay}"/>
+                                    <CheckBox Content="{Binding Path=ProjectName}" IsChecked="{Binding Path=IsChecked}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

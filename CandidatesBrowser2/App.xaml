@@ -19,6 +19,21 @@
             </Border>
            
         </ControlTemplate>
+        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxStyle">
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <ControlTemplate x:Key="TextBoxLabel" TargetType="TextBox">
+            <Border CornerRadius="100" BorderThickness="3">
+                <StackPanel>
+                    <Label Padding="1"  Content="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Content}" Background="Khaki" ></Label>
+                    <TextBox Width="150" x:Name="FirstNametxt" Style="{StaticResource TextBoxStyle}" Text="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Content}"></TextBox>
+                </StackPanel>
+                
+            </Border>
+        </ControlTemplate>
 
         <!--<ControlTemplate x:Key="Listview"  TargetType="{x:Type ListView}">
             <Border CornerRadius="100" BorderThickness="3" >

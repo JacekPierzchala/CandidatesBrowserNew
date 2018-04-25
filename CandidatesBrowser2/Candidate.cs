@@ -43,9 +43,7 @@ namespace CandidatesBrowser2
        
         public class Area : INotifyPropertyChanged
         {
-            public event PropertyChangedEventHandler PropertyChanged;
-            
-
+            public event PropertyChangedEventHandler PropertyChanged;           
             private bool _isChecked;
 
             public int Id { get; set; }
@@ -74,34 +72,75 @@ namespace CandidatesBrowser2
             }
         }
 
-        public class Status
-        {
+        public class Status : INotifyPropertyChanged
+    {
             public int ID { get; set; }
             public string Description { get; set; }
             public string Definition { get; set; }
             public bool Deleted { get; set; }
 
-            public Status(int id, string description, string definition, bool deleted)
+            public event PropertyChangedEventHandler PropertyChanged;
+            private bool _isChecked;
+
+        public Status(int id, string description, string definition, bool deleted, bool isChecked)
             {
                 this.ID = id;
                 this.Description = description;
                 this.Definition = definition;
                 this.Deleted = deleted;
-            }
-
+                this.IsChecked = isChecked;
         }
 
-        public class Project
+        public bool IsChecked
         {
+            get
+            {
+                return _isChecked;
+            }
+            set
+            {
+                _isChecked = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("IsChecked"));
+                }
+
+            }
+        }
+
+    }
+
+        public class Project : INotifyPropertyChanged
+    {
             public int ID { get; set; }
             public string ProjectName { get; set; }
+            public event PropertyChangedEventHandler PropertyChanged;
+            private bool _isChecked;
 
-            public Project(int id, string ProjectName)
+        public Project(int id, string ProjectName, bool isChecked)
             {
                 this.ID = id;
                 this.ProjectName = ProjectName;
+                this.IsChecked = isChecked;
+            }
+
+        public bool IsChecked
+        {
+            get
+            {
+                return _isChecked;
+            }
+            set
+            {
+                _isChecked = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("IsChecked"));
+                }
+
             }
         }
+    }
 
         public class ProjectGroup
         {
@@ -120,15 +159,34 @@ namespace CandidatesBrowser2
             }
         }
 
-        public class Group
-        {
+        public class Group : INotifyPropertyChanged
+    {
             public int id { get; set; }
             public string Name { get; set; }
+            public event PropertyChangedEventHandler PropertyChanged;
+            private bool _isChecked;
 
-            public Group(int id, string name)
+            public bool IsChecked
+            {
+                get
+                {
+                    return _isChecked;
+                }
+                set
+                {
+                    _isChecked = value;
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged(this, new PropertyChangedEventArgs("IsChecked"));
+                    }
+
+                }
+            }
+        public Group(int id, string name, bool isChecked)
             {
                 this.id = id;
                 this.Name = name;
+                this.IsChecked = isChecked;
             }
         }
 

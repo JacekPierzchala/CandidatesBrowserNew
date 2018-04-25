@@ -141,7 +141,8 @@ namespace CandidatesBrowser2
                                 id: int.Parse(row["ID"].ToString()),
                                 description: row["DESCRIPTION"].ToString(),
                                 definition: row["DEFINITION"].ToString(),
-                                deleted: bool.Parse(row["DELETED"].ToString())
+                                deleted: bool.Parse(row["DELETED"].ToString()),
+                                isChecked:true
                                )
                      );
             }
@@ -155,7 +156,8 @@ namespace CandidatesBrowser2
                     (
                     new Project(
                                 id: int.Parse(row["ID"].ToString()),
-                                ProjectName: row["PROJECT_NAME"].ToString()
+                                ProjectName: row["PROJECT_NAME"].ToString(),
+                                isChecked:true
                                 
                                )
                      );
@@ -200,7 +202,7 @@ namespace CandidatesBrowser2
 
             #endregion
 
-            #region
+            #region Group
 
             GroupDT = GlobalFunctions.GetTableFromSQL(SQLs.Groups);
 
@@ -209,7 +211,8 @@ namespace CandidatesBrowser2
                 GroupCollection.Add(
                     new Group (
                     id: int.Parse(row["ID"].ToString()),
-                    name: row["NAME"].ToString()
+                    name: row["NAME"].ToString(),
+                    isChecked:true
                                 )
                                 );
             }
@@ -217,6 +220,7 @@ namespace CandidatesBrowser2
             #endregion
         }
 
+        #region CollectionsChange
         private void ProjectInPutText_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeProjectList(((TextBox)sender).Text.ToString());
@@ -226,16 +230,6 @@ namespace CandidatesBrowser2
         {        
             ObservableCollection<Project> ProjectsCollectionFiltered = new ObservableCollection<Project>(ProjectsCollection.Where(Project => Project.ProjectName.ToLower().StartsWith(text.ToLower())).ToList());           
             ProjectList.ItemsSource = ProjectsCollectionFiltered;
-        }
-
-      
-        
-
-      
-        private void AreaChckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            string x = "";
-            AreaColection_Change();
         }
 
         private void AreaChckBox_Click(object sender, RoutedEventArgs e)
@@ -255,15 +249,98 @@ namespace CandidatesBrowser2
                 }
             }
 
-
-            //ObservableCollection<ProjectGroup> ProjectFiltered = new ObservableCollection<ProjectGroup>(ProjectGroupCollection.Join(AreaFiltered, p => p.ConfigAreaID, a => a.Id, (p, a)=>p).ToList());
+         
             ObservableCollection<Project> ProjectFiltered = new ObservableCollection<Project>(ProjectsCollection.Join(ProjectGroupCollection.Join(AreaFiltered, p => p.ConfigAreaID, a => a.Id, (p, a) => p).ToList(), p => p.ID, pg => pg.ConfigProjectLibID, (p, pg) => p).ToList());
-
             ProjectList.ItemsSource = ProjectFiltered;
-           
-
+            ProjectInPutText.Text = "";
         }
 
+        #endregion
+        
+        #region SelectAll
+        private void AreaSelectAllCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)AreaSelectAllCheckbox.IsChecked)
+            {
+                foreach (Area item in AreaCombo.Items)
+                {
+                    item.IsChecked = true;                                     
+                }
 
+            }
+            else if(!(bool)AreaSelectAllCheckbox.IsChecked)
+            {
+                foreach (Area item in AreaCombo.Items)
+                {
+                    item.IsChecked = false;
+                }
+            }
+
+            AreaColection_Change();
+        }
+      
+        private void StatusSelectAllCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)StatusSelectAllCheckbox.IsChecked)
+            {
+                foreach (Status item in StatusCombo.Items)
+                {
+                    item.IsChecked = true;
+                }
+
+            }
+            else if (!(bool)StatusSelectAllCheckbox.IsChecked)
+            {
+                foreach (Status item in StatusCombo.Items)
+                {
+                    item.IsChecked = false;
+                }
+            }
+        }
+
+        private void GroupSelectAllCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)GroupSelectAllCheckbox.IsChecked)
+            {
+                foreach (Group item in GroupList.Items)
+                {
+                    item.IsChecked = true;
+                }
+
+            }
+            else if (!(bool)GroupSelectAllCheckbox.IsChecked)
+            {
+                foreach (Group item in GroupList.Items)
+                {
+                    item.IsChecked = false;
+                }
+            }
+        }
+
+        private void ProjectSelectAllCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)ProjectSelectAllCheckbox.IsChecked)
+            {
+                foreach (Project item in ProjectList.Items)
+                {
+                    item.IsChecked = true;
+                }
+
+            }
+            else if (!(bool)ProjectSelectAllCheckbox.IsChecked)
+            {
+                foreach (Project item in ProjectList.Items)
+                {
+                    item.IsChecked = false;
+                }
+            }
+        }
+
+        #endregion
+
+        private void searchButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
