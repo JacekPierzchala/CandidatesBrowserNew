@@ -99,7 +99,16 @@ namespace CandidatesBrowser2
         void LoadData()
         {
             #region CandidatesDT
-            CandidatesDT = GlobalFunctions.GetTableFromSQL(SQLs.Candidates);
+            try
+            {
+                CandidatesDT = GlobalFunctions.GetTableFromSQL(SQLs.Candidates);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Cannot run application " + ex.Message, "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+                return;
+            }
             foreach (DataRow row in CandidatesDT.Rows)
             {
                 CandidatesCollection.Add
@@ -246,10 +255,12 @@ namespace CandidatesBrowser2
                 }
             }
 
-            //ObservableCollection<Project> ProjectFiltered = new ObservableCollection<Project>(ProjectsCollection.Join();
 
+            //ObservableCollection<ProjectGroup> ProjectFiltered = new ObservableCollection<ProjectGroup>(ProjectGroupCollection.Join(AreaFiltered, p => p.ConfigAreaID, a => a.Id, (p, a)=>p).ToList());
+            ObservableCollection<Project> ProjectFiltered = new ObservableCollection<Project>(ProjectsCollection.Join(ProjectGroupCollection.Join(AreaFiltered, p => p.ConfigAreaID, a => a.Id, (p, a) => p).ToList(), p => p.ID, pg => pg.ConfigProjectLibID, (p, pg) => p).ToList());
 
-            string x = "";
+            ProjectList.ItemsSource = ProjectFiltered;
+           
 
         }
 
