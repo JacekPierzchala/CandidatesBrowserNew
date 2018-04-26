@@ -27,9 +27,45 @@ namespace CandidatesBrowser2
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
 
             dataAdapter.SelectCommand.CommandTimeout = 1000;
+            //dataAdapter.SelectCommand.Parameters.Add()
             DataTable table = new DataTable();
             table.Locale = System.Globalization.CultureInfo.InvariantCulture;
             dataAdapter.Fill(table);
+            return table;
+        }
+
+        public static DataTable GetTableFromServerArgs( string procedureName ,params string [] ArgsValues)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+            SqlDataReader reader;
+            DataTable table = new DataTable();
+            cmd.CommandText = procedureName;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 1000;
+            cmd.Connection = sqlConnection;
+            sqlConnection.Open();
+
+            foreach (string param in ArgsValues)
+            {
+                string paramName = param.Substring(0, param.IndexOf("-"));
+                string paramValue = null;
+                if (param.IndexOf("-")!= param.Length-1)
+                {
+                    paramValue = param.Substring(param.IndexOf("-") + 1, param.Length - param.IndexOf("-") - 1);
+
+                }
+                cmd.Parameters.AddWithValue(paramName, paramValue);
+            }
+           
+           
+          
+
+            reader = cmd.ExecuteReader();
+
+            table.Load(reader);
+
+            sqlConnection.Close();
             return table;
         }
     }

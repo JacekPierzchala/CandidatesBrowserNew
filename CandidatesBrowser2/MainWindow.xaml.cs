@@ -340,6 +340,91 @@ namespace CandidatesBrowser2
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
+            string area = "|";
+            foreach (Area item in AreaCombo.Items)
+            {
+                if(item.IsChecked)
+                {
+                    area += item.Id + "|";
+                }
+            }
+            if (area == "|")
+            {
+                area = null;
+            }
+
+
+            string status = "|";
+            foreach (Status item in StatusCombo.Items)
+            {
+                if (item.IsChecked)
+                {
+                    status += item.ID + "|";
+                }
+            }
+            if (status == "|")
+            {
+                status = null;
+            }
+
+
+
+            string group = "|";
+            foreach (Group item in GroupList.Items)
+            {
+                if (item.IsChecked)
+                {
+                    group += item.id + "|";
+                }
+            }
+            if (group == "|")
+            {
+                group = null;
+            }
+
+            string project = "|";
+            foreach (Project item in ProjectList.Items)
+            {
+                if (item.IsChecked)
+                {
+                    project +=  item.ID +"|";
+                }
+            }           
+            if (project== "|")
+            {
+                project = null;
+            }
+
+            string lastName = LastNametxt.Text;
+            string firstName = FirstNametxt.Text;
+            string position = Positiontxt.Text;
+
+            CandidatesDT = GlobalFunctions.GetTableFromServerArgs("SEARCH_CANDIDATE", "@FIRST_NAME"+ "-"+ firstName, "@LAST_NAME" + "-" + lastName,
+              "@POSITION" + "-" + position, "@PROJECT" + "-" + project, "@AREA" + "-" + area, "@GROUP" + "-" + group, "@STATUS"+ "-" + status);
+
+            CandidatesCollection.Clear();
+
+
+            foreach (DataRow row in CandidatesDT.Rows)
+            {
+                CandidatesCollection.Add
+                    (
+                    new Candidate
+                        (
+                        id: int.Parse(row["ID"].ToString()),
+                        firstName: row["FIRST_NAME"].ToString(),
+                        lastName: row["LAST_NAME"].ToString(),
+                        firstEmail: row["1ST_@"].ToString(),
+                        secondEmail: row["2ND_@"].ToString(),
+                        firstPhone: row["1ST_TEL"].ToString(),
+                        secondPhone: row["2ND_TEL"].ToString(),
+                        attendedProjects: int.Parse(row["ATTENDED_PROJECTS"].ToString()),
+                        isCvReceived: bool.Parse(row["CV_RECEIVED"].ToString())
+                        )
+                      );
+            }
+
+            MainView.ItemsSource = CandidatesCollection;
 
         }
     }
