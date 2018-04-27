@@ -432,5 +432,21 @@ namespace CandidatesBrowser2
             MainView.ItemsSource = CandidatesCollection;
 
         }
+
+        private void clearButton_Click(object sender, RoutedEventArgs e)
+        {
+            LastNametxt.Text = "";
+            FirstNametxt.Text = "";
+            Positiontxt.Text = "";
+
+            ProjectSelectAllCheckbox.IsChecked = true;
+            ProjectSelectAllCheckbox_Click(this, e);
+            GroupSelectAllCheckbox.IsChecked = true;
+            GroupSelectAllCheckbox_Click(this, e);
+            StatusSelectAllCheckbox.IsChecked = true;
+            StatusSelectAllCheckbox_Click(this, e);
+            AreaSelectAllCheckbox.IsChecked = true;
+            AreaSelectAllCheckbox_Click(this, e);
+        }
     }
 }

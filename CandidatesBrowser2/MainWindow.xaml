@@ -25,6 +25,9 @@
                 <Button Margin="2" x:Name="searchButton" Click="searchButton_Click">Search</Button>
             </Border>
             <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                <Button Margin="2" x:Name="clearButton" Click="clearButton_Click">Clear</Button>
+            </Border>
+            <Border CornerRadius="100" BorderThickness="3"  Width="300">
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="150" x:Name="FirstNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
                     <Label>FirstName</Label>
@@ -142,9 +145,26 @@
             </Border>
                
         </StackPanel>
+        
         <DataGrid  Grid.Row="0" Grid.Column="1"  x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" 
                    SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False" 
                    AutoGenerateColumns="False"  >
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+
+                    <MenuItem >
+                        <MenuItem.Icon>
+                            <Image Source="magnifying_glass.ico"/>
+                        </MenuItem.Icon>
+                        Read CV</MenuItem>
+                    <MenuItem>
+                        <MenuItem.Icon>
+                            <Image Source="clip.ico"/>
+                        </MenuItem.Icon>
+                        Attach CV</MenuItem>
+                    
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             
             <DataGrid.Columns >
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="SizeToCells" />
@@ -185,6 +205,10 @@
             <TextBlock Margin="5">Font Size:</TextBlock>
             <Label Content="{Binding ElementName=FonSizeSlider, Path=Value }" ContentStringFormat="{}{0:#}"></Label>
             <Slider Width="100" Minimum="10" Maximum="15" x:Name="FonSizeSlider" Value="{Binding ElementName=MainView, Path=FontSize}"></Slider>
+            <TextBlock Margin="5">Records Found:</TextBlock>
+            <Label Content="{Binding ElementName=MainView, Path=Items.Count}" ></Label>
+            <TextBlock Margin="5">Selected Rows:</TextBlock>
+            <Label Content="{Binding ElementName=MainView, Path=SelectedItems.Count}" ></Label>
         </StatusBar>
     </Grid>
     

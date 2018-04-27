@@ -109,6 +109,12 @@
   <ItemGroup>
     <Resource Include="cv_icon_QsY_icon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="magnifying_glass.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="clip.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
