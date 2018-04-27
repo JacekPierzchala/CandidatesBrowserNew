@@ -62,7 +62,10 @@ namespace CandidatesBrowser2
             {
                 MessageBox.Show("Please run this application using bat file", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
+                System.Windows.Application.Current.Shutdown();
+                Environment.Exit(0);
                 return;
+               
             }
 
 
@@ -75,6 +78,8 @@ namespace CandidatesBrowser2
             {
                 MessageBox.Show("Please run this application using bat file", "Warning", MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
+                System.Windows.Application.Current.Shutdown();
+                Environment.Exit(0);
                 return;
             }
 
