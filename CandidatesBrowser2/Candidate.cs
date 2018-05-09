@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +40,32 @@ namespace CandidatesBrowser2
                 this.IsCvReceived = isCvReceived;
             }
 
+        public static ObservableCollection<Candidate> CreateCandidatesCollection(DataTable DataT)
+        {
+            ObservableCollection<Candidate> CandidatesCollection = new ObservableCollection<Candidate>();
+            foreach(DataRow row in DataT.Rows)
+            {
+                CandidatesCollection.Add
+                    (
+                    new Candidate
+                        (
+                        id: int.Parse(row["ID"].ToString()),
+                        firstName: row["FIRST_NAME"].ToString(),
+                        lastName: row["LAST_NAME"].ToString(),
+                        firstEmail: row["1ST_@"].ToString(),
+                        secondEmail: row["2ND_@"].ToString(),
+                        firstPhone: row["1ST_TEL"].ToString(),
+                        secondPhone: row["2ND_TEL"].ToString(),
+                        attendedProjects: int.Parse(row["ATTENDED_PROJECTS"].ToString()),
+                        isCvReceived: bool.Parse(row["CV_RECEIVED"].ToString())
+                        )
+                      );
+            }
+
+
+            return CandidatesCollection;
+        }
+
         }
 
        
@@ -70,7 +98,26 @@ namespace CandidatesBrowser2
                 this.AreaName = areaName;
                 this.IsChecked = isChecked;
             }
+
+
+        public static ObservableCollection<Area> CreateAreaCollection(DataTable DataT)
+        {
+            ObservableCollection<Area> AreaCollection = new ObservableCollection<Area>();
+
+            foreach (DataRow row in DataT.Rows)
+            {
+                AreaCollection.Add
+                    (
+                    new Area(
+                             id: int.Parse(row["ID"].ToString()),
+                             areaName: row["AREA_NAME"].ToString(),
+                             isChecked: true
+                             )
+                     );
+            }
+            return AreaCollection;
         }
+    }
 
         public class Status : INotifyPropertyChanged
     {
@@ -108,6 +155,25 @@ namespace CandidatesBrowser2
             }
         }
 
+        public static ObservableCollection<Status> CreateStatusCollection(DataTable DataT)
+        {
+            ObservableCollection<Status> StatusCollection = new ObservableCollection<Status>();
+
+            foreach (DataRow row in DataT.Rows)
+            {
+                StatusCollection.Add
+                    (
+                    new Status(
+                                id: int.Parse(row["ID"].ToString()),
+                                description: row["DESCRIPTION"].ToString(),
+                                definition: row["DEFINITION"].ToString(),
+                                deleted: bool.Parse(row["DELETED"].ToString()),
+                                isChecked: true
+                               )
+                     );
+            }
+            return StatusCollection;
+        }
     }
 
         public class Project : INotifyPropertyChanged
@@ -140,6 +206,26 @@ namespace CandidatesBrowser2
 
             }
         }
+
+
+        public static ObservableCollection<Project> CreateProjectCollection(DataTable DataT)
+        {
+            ObservableCollection<Project> ProjectCollection = new ObservableCollection<Project>();
+
+            foreach (DataRow row in DataT.Rows)
+            {
+                ProjectCollection.Add
+                    (
+                    new Project(
+                                id: int.Parse(row["ID"].ToString()),
+                                ProjectName: row["PROJECT_NAME"].ToString(),
+                                isChecked: true
+
+                               )
+                     );
+            }
+            return ProjectCollection;
+        }
     }
 
         public class ProjectGroup
@@ -157,7 +243,27 @@ namespace CandidatesBrowser2
                 this.ConfigProjectLibID = ConfigProjectLibID;
 
             }
+
+        public static ObservableCollection<ProjectGroup> CreateProjectGroupCollection(DataTable DataT)
+        {
+            ObservableCollection<ProjectGroup> ProjectGroupCollection = new ObservableCollection<ProjectGroup>();
+
+            foreach (DataRow row in DataT.Rows)
+            {
+                ProjectGroupCollection.Add
+                     (
+                     new ProjectGroup(
+                                 id: int.Parse(row["ID"].ToString()),
+                                 ConfigProjectLibID: int.Parse(row["CONFIG_PROJECT_LIB"].ToString()),
+                                 ConfigGroupID: int.Parse(row["CONFIG_GROUP_ID"].ToString()),
+                                 ConfigAreaID: int.Parse(row["CONFIG_AREA_ID"].ToString())
+
+                                )
+                      );
+            }
+            return ProjectGroupCollection;
         }
+    }
 
         public class Group : INotifyPropertyChanged
     {
@@ -182,13 +288,31 @@ namespace CandidatesBrowser2
 
                 }
             }
-        public Group(int id, string name, bool isChecked)
+            public Group(int id, string name, bool isChecked)
             {
                 this.id = id;
                 this.Name = name;
                 this.IsChecked = isChecked;
             }
+
+
+        public static ObservableCollection<Group> CreateGroupCollection(DataTable DataT)
+        {
+            ObservableCollection<Group> GroupCollection = new ObservableCollection<Group>();
+            foreach (DataRow row in DataT.Rows)
+            {
+                GroupCollection.Add
+                    (
+                    new Group(
+                    id: int.Parse(row["ID"].ToString()),
+                    name: row["NAME"].ToString(),
+                    isChecked: true
+                                )
+                      );
+            }
+            return GroupCollection;
         }
+    }
 
 
 }

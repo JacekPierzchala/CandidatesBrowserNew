@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="MainWindow" Height="700" Width="1100" MaxWidth="1110" MinWidth="1100">
+        Title="MainWindow" Height="700" Width="1100" MaxWidth="1110" MinWidth="1100" x:Name="MainWindowView">
     <Window.Resources>
         
     </Window.Resources>
@@ -125,14 +125,15 @@
 
             <Label  Padding="1" Content="Project:" Template="{StaticResource LabelTemplate}"/>
             <Border CornerRadius="100" BorderThickness="3" Width="300">
-                <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
+                <Expander Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" >
-                            <TextBox Style="{StaticResource TextBoxStyle}" x:Name="ProjectInPutText"  Width="150"  TextChanged="ProjectInPutText_TextChanged"></TextBox>
+                            <TextBox  Style="{StaticResource TextBoxStyle}" x:Name="ProjectInPutText"  Width="150"  TextChanged="ProjectInPutText_TextChanged"></TextBox>
                             <Label  Content="Select All:"></Label>
                             <CheckBox VerticalAlignment="Center" x:Name="ProjectSelectAllCheckbox" IsChecked="True" Click="ProjectSelectAllCheckbox_Click"></CheckBox>
                         </StackPanel>
-                        <ListBox   x:Name="ProjectList"  Style="{StaticResource ListCheckBoxStyle}" Height="400">
+                        <ListBox  MaxHeight="250" 
+                                    x:Name="ProjectList"  Style="{StaticResource ListCheckBoxStyle}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.IsDeferredScrollingEnabled="True">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <CheckBox Content="{Binding Path=ProjectName}" IsChecked="{Binding Path=IsChecked}"/>
@@ -149,15 +150,28 @@
         <DataGrid  Grid.Row="0" Grid.Column="1"  x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" 
                    SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False" 
                    AutoGenerateColumns="False"  >
+            
             <DataGrid.ContextMenu>
                 <ContextMenu>
 
-                    <MenuItem >
+                    <MenuItem x:Name="readMenuItem">
                         <MenuItem.Icon>
                             <Image Source="magnifying_glass.ico"/>
                         </MenuItem.Icon>
                         Read CV</MenuItem>
-                    <MenuItem>
+                    <MenuItem x:Name="attachMenuItem" Click="attachMenuItem_Click" >
+                        <MenuItem.Style>
+                            <Style TargetType="{x:Type MenuItem}">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding  ElementName=MainView, Path=SelectedItems.Count}" Value="1">
+                                        <Setter Property="Background" Value="Red"></Setter>
+                                        <Setter Property="Foreground" Value="Red"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                           
                         <MenuItem.Icon>
                             <Image Source="clip.ico"/>
                         </MenuItem.Icon>

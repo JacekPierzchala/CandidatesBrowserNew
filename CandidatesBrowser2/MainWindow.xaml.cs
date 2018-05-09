@@ -114,114 +114,36 @@ namespace CandidatesBrowser2
                 this.Close();
                 return;
             }
-            foreach (DataRow row in CandidatesDT.Rows)
-            {
-                CandidatesCollection.Add
-                    (
-                    new Candidate
-                        (
-                        id:int.Parse(row["ID"].ToString()),
-                        firstName: row["FIRST_NAME"].ToString(),
-                        lastName: row["LAST_NAME"].ToString(),
-                        firstEmail: row["1ST_@"].ToString(),
-                        secondEmail: row["2ND_@"].ToString(),
-                        firstPhone: row["1ST_TEL"].ToString(),
-                        secondPhone: row["2ND_TEL"].ToString(),
-                        attendedProjects: int.Parse(row["ATTENDED_PROJECTS"].ToString()),
-                        isCvReceived: bool.Parse(row["CV_RECEIVED"].ToString())
-                        )                  
-                      );
-            }
+
+            CandidatesCollection=Candidate.CreateCandidatesCollection(CandidatesDT);
+              
 
             #endregion
 
             #region Status
             StatusesDT = GlobalFunctions.GetTableFromSQL(SQLs.Statuses);
-
-            foreach(DataRow row in StatusesDT.Rows)
-            {
-                StatusCollection.Add
-                    (
-                    new Status(
-                                id: int.Parse(row["ID"].ToString()),
-                                description: row["DESCRIPTION"].ToString(),
-                                definition: row["DEFINITION"].ToString(),
-                                deleted: bool.Parse(row["DELETED"].ToString()),
-                                isChecked:true
-                               )
-                     );
-            }
+            StatusCollection = Status.CreateStatusCollection(StatusesDT);
             #endregion
 
             #region Projects
             ProjectsDT = GlobalFunctions.GetTableFromSQL(SQLs.Projects);
-            foreach (DataRow row in ProjectsDT.Rows)
-            {
-                ProjectsCollection.Add
-                    (
-                    new Project(
-                                id: int.Parse(row["ID"].ToString()),
-                                ProjectName: row["PROJECT_NAME"].ToString(),
-                                isChecked:true
-                                
-                               )
-                     );
-            }
-
+            ProjectsCollection = Project.CreateProjectCollection(ProjectsDT);
 
             #endregion
 
             #region ProjectsGroup
             ProjectsGroupDT = GlobalFunctions.GetTableFromSQL(SQLs.ProjectGroup);
-
-            foreach (DataRow row in ProjectsGroupDT.Rows)
-            {
-                ProjectGroupCollection.Add
-                    (
-                    new ProjectGroup(
-                                id: int.Parse(row["ID"].ToString()),
-                                ConfigProjectLibID: int.Parse(row["CONFIG_PROJECT_LIB"].ToString()),
-                                ConfigGroupID: int.Parse(row["CONFIG_GROUP_ID"].ToString()),
-                                ConfigAreaID: int.Parse(row["CONFIG_AREA_ID"].ToString())
-
-                               )
-                     );
-            }
-
+            ProjectGroupCollection = ProjectGroup.CreateProjectGroupCollection(ProjectsGroupDT);
             #endregion
 
             #region Area
             AreaDT = GlobalFunctions.GetTableFromSQL(SQLs.Area);
-
-            foreach (DataRow row in AreaDT.Rows)
-            {
-                AreaCollection.Add
-                    (
-                    new Area(
-                             id: int.Parse(row["ID"].ToString()),
-                             areaName: row["AREA_NAME"].ToString(),
-                             isChecked: true
-                             )
-                     );
-            }
-
+            AreaCollection=Area.CreateAreaCollection(AreaDT);
             #endregion
 
             #region Group
-
             GroupDT = GlobalFunctions.GetTableFromSQL(SQLs.Groups);
-
-            foreach (DataRow row in GroupDT.Rows)
-            {
-                GroupCollection.Add(
-                    new Group (
-                    id: int.Parse(row["ID"].ToString()),
-                    name: row["NAME"].ToString(),
-                    isChecked:true
-                                )
-                                );
-            }
-
+            GroupCollection = Group.CreateGroupCollection(GroupDT);            
             #endregion
         }
 
@@ -407,27 +329,7 @@ namespace CandidatesBrowser2
             CandidatesDT = GlobalFunctions.GetTableFromServerArgs("SEARCH_CANDIDATE", "@FIRST_NAME"+ "-"+ firstName, "@LAST_NAME" + "-" + lastName,
               "@POSITION" + "-" + position, "@PROJECT" + "-" + project, "@AREA" + "-" + area, "@GROUP" + "-" + group, "@STATUS"+ "-" + status);
 
-            CandidatesCollection.Clear();
-
-
-            foreach (DataRow row in CandidatesDT.Rows)
-            {
-                CandidatesCollection.Add
-                    (
-                    new Candidate
-                        (
-                        id: int.Parse(row["ID"].ToString()),
-                        firstName: row["FIRST_NAME"].ToString(),
-                        lastName: row["LAST_NAME"].ToString(),
-                        firstEmail: row["1ST_@"].ToString(),
-                        secondEmail: row["2ND_@"].ToString(),
-                        firstPhone: row["1ST_TEL"].ToString(),
-                        secondPhone: row["2ND_TEL"].ToString(),
-                        attendedProjects: int.Parse(row["ATTENDED_PROJECTS"].ToString()),
-                        isCvReceived: bool.Parse(row["CV_RECEIVED"].ToString())
-                        )
-                      );
-            }
+            CandidatesCollection = Candidate.CreateCandidatesCollection(CandidatesDT);
 
             MainView.ItemsSource = CandidatesCollection;
 
@@ -447,6 +349,11 @@ namespace CandidatesBrowser2
             StatusSelectAllCheckbox_Click(this, e);
             AreaSelectAllCheckbox.IsChecked = true;
             AreaSelectAllCheckbox_Click(this, e);
+        }
+
+        private void attachMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
