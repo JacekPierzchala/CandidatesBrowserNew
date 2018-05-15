@@ -39,6 +39,10 @@ namespace CandidatesBrowser2
         public DataTable GroupDT;
         public ObservableCollection<Group> GroupCollection = new ObservableCollection<Group>();
 
+        public ObservableCollection<ProjectGroup> ProjectGroupFiltered;
+        public ObservableCollection<Project> ProjectFiltered;
+        public ObservableCollection<Area> AreaFiltered;
+
         PcName pcmane;
         #endregion
 
@@ -148,6 +152,7 @@ namespace CandidatesBrowser2
         }
 
         #region CollectionsChange
+
         private void ProjectInPutText_TextChanged(object sender, TextChangedEventArgs e)
         {
             ChangeProjectList(((TextBox)sender).Text.ToString());
@@ -161,29 +166,177 @@ namespace CandidatesBrowser2
 
         private void AreaChckBox_Click(object sender, RoutedEventArgs e)
         {
+            //llectionsChange("Area");
             AreaColection_Change();
         }
-
-       
+      
         public void AreaColection_Change()
         {
             ObservableCollection<Area> AreaFiltered = new ObservableCollection<Area>();
-            foreach (Area item in AreaCombo.Items )
+            foreach (Area item in AreaCombo.Items)
             {
-               if(item.IsChecked)
+                if (item.IsChecked)
                 {
                     AreaFiltered.Add(item);
                 }
             }
 
-         
-            ObservableCollection<Project> ProjectFiltered = new ObservableCollection<Project>(ProjectsCollection.Join(ProjectGroupCollection.Join(AreaFiltered, p => p.ConfigAreaID, a => a.Id, (p, a) => p).ToList(), p => p.ID, pg => pg.ConfigProjectLibID, (p, pg) => p).ToList());
+            if (AreaFiltered.Count == AreaCombo.Items.Count)
+            {
+                AreaSelectAllCheckbox.IsChecked = true;
+            }
+            else
+            {
+                AreaSelectAllCheckbox.IsChecked = false;
+            }
+
+            ObservableCollection<Project> ProjectFiltered =
+                new ObservableCollection<Project>(ProjectsCollection.Join
+                (ProjectGroupCollection.Join
+                        (AreaFiltered, p => p.ConfigAreaID, a => a.Id, (p, a) => p).ToList(),
+                  p => p.ID, pg => pg.ConfigProjectLibID, (p, pg) => p).ToList());
             ProjectList.ItemsSource = ProjectFiltered;
             ProjectInPutText.Text = "";
+
+            //CollectionsChange("Area");
+
+
         }
 
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+          
+            int i = 0;
+
+            foreach (Group item in GroupList.Items)
+            {
+                if (item.IsChecked)
+                {
+                    i++;
+                }
+            }
+
+            if (i == GroupList.Items.Count)
+            {
+                GroupSelectAllCheckbox.IsChecked = true;
+            }
+            else
+                GroupSelectAllCheckbox.IsChecked = false;
+        }
+
+        private void CollectionsChange(string CollectionName)
+        {
+            switch (CollectionName)
+            {
+                case ("Area"):
+                 {
+                       AreaFiltered = new ObservableCollection<Area>();
+                        foreach (Area item in AreaCombo.Items)
+                        {
+                            if (item.IsChecked)
+                            {
+                                AreaFiltered.Add(item);
+                            }
+                        }
+
+                        if (AreaFiltered.Count == AreaCombo.Items.Count)
+                        {
+                            AreaSelectAllCheckbox.IsChecked = true;
+                        }
+                        else
+                        {
+                            AreaSelectAllCheckbox.IsChecked = false;
+                        }
+
+                      ProjectGroupFiltered = new ObservableCollection<ProjectGroup>(ProjectGroupCollection.Join(AreaFiltered, p => p.ConfigAreaID, a => a.Id, (p, a) => p).ToList());
+                    }
+                    break;
+
+                case ("Group"):
+                    {
+                        ObservableCollection<Group> GroupFiltered = new ObservableCollection<Group>();
+                        foreach (Group item in GroupList.Items)
+                        {
+                            if (item.IsChecked)
+                            {
+                                GroupFiltered.Add(item);
+                            }
+                        }
+
+                        if (GroupFiltered.Count == GroupList.Items.Count)
+                        {
+                            GroupSelectAllCheckbox.IsChecked = true;
+                        }
+                        else
+                        {
+                            GroupSelectAllCheckbox.IsChecked = false;
+                        }
+
+                        ProjectGroupFiltered = new ObservableCollection<ProjectGroup>(ProjectGroupCollection.Join(GroupFiltered, p => p.ConfigGroupID, a => a.id, (p, a) => p).ToList());
+                    
+                     }
+                    break;
+
+
+                case ("Project"):
+                    {
+                        ProjectFiltered = new ObservableCollection<Project>();
+                        foreach (Project item in ProjectList.Items)
+                        {
+                            if (item.IsChecked)
+                            {
+                                ProjectFiltered.Add(item);
+                            }
+                        }
+
+                        if (ProjectFiltered.Count == ProjectList.Items.Count)
+                        {
+                            ProjectSelectAllCheckbox.IsChecked = true;
+                        }
+                        else
+                        {
+                            ProjectSelectAllCheckbox.IsChecked = false;
+                        }
+
+                        ProjectGroupFiltered = new ObservableCollection<ProjectGroup>(ProjectGroupCollection.Join(ProjectFiltered, p => p.ConfigProjectLibID, a => a.ID, (p, a) => p).ToList());
+
+                    }
+                    break;
+
+            }
+           //ProjectFiltered.Clear();
+            ProjectFiltered = new ObservableCollection<Project>(ProjectsCollection.Join(ProjectGroupFiltered, p => p.ID, a => a.ConfigProjectLibID, (p, a) => p).ToList());
+            ProjectList.ItemsSource = ProjectFiltered;
+            ProjectInPutText.Text = "";
+
+            //AreaFiltered.Clear();
+            AreaFiltered = new ObservableCollection<Area>(AreaCollection.Join(ProjectGroupFiltered, p => p.Id, a => a.ConfigAreaID, (p, a) => p).ToList().Distinct());
+            AreaCombo.ItemsSource = AreaFiltered;
+        }
+
+        private void ChckBox_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
+
+            foreach (Status item in StatusCombo.Items)
+            {
+                if (item.IsChecked)
+                {
+                    i++;
+                }
+            }
+
+            if (i == StatusCombo.Items.Count)
+            {
+                StatusSelectAllCheckbox.IsChecked = true;
+            }
+            else
+                StatusSelectAllCheckbox.IsChecked = false;
+        }
+
+
         #endregion
-        
+
         #region SelectAll
         private void AreaSelectAllCheckbox_Click(object sender, RoutedEventArgs e)
         {
@@ -223,6 +376,8 @@ namespace CandidatesBrowser2
                     item.IsChecked = false;
                 }
             }
+
+           
         }
 
         private void GroupSelectAllCheckbox_Click(object sender, RoutedEventArgs e)
@@ -326,8 +481,16 @@ namespace CandidatesBrowser2
             string firstName = FirstNametxt.Text;
             string position = Positiontxt.Text;
 
+            bool? CvReceived = null;
+
+            if (CVrEceivedYes.IsChecked==true)
+                CvReceived = true;
+            else if (CVrEceivedNo.IsChecked == true)
+                CvReceived = false;
+
             CandidatesDT = GlobalFunctions.GetTableFromServerArgs("SEARCH_CANDIDATE", "@FIRST_NAME"+ "-"+ firstName, "@LAST_NAME" + "-" + lastName,
-              "@POSITION" + "-" + position, "@PROJECT" + "-" + project, "@AREA" + "-" + area, "@GROUP" + "-" + group, "@STATUS"+ "-" + status);
+              "@POSITION" + "-" + position, "@PROJECT" + "-" + project, "@AREA" + "-" + area, "@GROUP" + "-" + group, "@STATUS"+ "-" + status
+              , "@CVRECEIVED" + "-" + CvReceived);
 
             CandidatesCollection = Candidate.CreateCandidatesCollection(CandidatesDT);
 
@@ -340,6 +503,7 @@ namespace CandidatesBrowser2
             LastNametxt.Text = "";
             FirstNametxt.Text = "";
             Positiontxt.Text = "";
+            CVrEceivedAll.IsChecked = true;
 
             ProjectSelectAllCheckbox.IsChecked = true;
             ProjectSelectAllCheckbox_Click(this, e);
@@ -354,6 +518,28 @@ namespace CandidatesBrowser2
         private void attachMenuItem_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+   
+
+        private void ProjectCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
+
+            foreach (Project item in ProjectList.Items)
+            {
+                if (item.IsChecked)
+                {
+                    i++;
+                }
+            }
+
+            if (i == ProjectList.Items.Count)
+            {
+                ProjectSelectAllCheckbox.IsChecked = true;
+            }
+            else
+                ProjectSelectAllCheckbox.IsChecked = false;
         }
     }
 }

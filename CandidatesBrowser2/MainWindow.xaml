@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="MainWindow" Height="700" Width="1100" MaxWidth="1110" MinWidth="1100" x:Name="MainWindowView">
+        Title="MainWindow" Height="700" Width="1100" MaxWidth="1400" MinWidth="1100" x:Name="MainWindowView">
     <Window.Resources>
         
     </Window.Resources>
@@ -27,6 +27,25 @@
             <Border CornerRadius="100" BorderThickness="3"  Width="300">
                 <Button Margin="2" x:Name="clearButton" Click="clearButton_Click">Clear</Button>
             </Border>
+            <GroupBox>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Label  VerticalAlignment="Center">CV Received </Label>
+                    <Border CornerRadius="100" BorderThickness="3"  Width="210">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <Label>All:</Label>
+                            <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedAll" IsChecked="True"></RadioButton>
+                            <Label>Yes:</Label>
+                            <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedYes" ></RadioButton>
+                            <Label>No:</Label>
+                            <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedNo" ></RadioButton>
+                        </StackPanel>
+                        
+                    </Border>
+                 
+                </StackPanel>
+               
+                
+            </GroupBox>
             <Border CornerRadius="100" BorderThickness="3"  Width="300">
                 <StackPanel Orientation="Horizontal">
                     <TextBox Width="150" x:Name="FirstNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
@@ -61,7 +80,7 @@
                         <ListBox Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" x:Name="StatusCombo" Style="{StaticResource ListCheckBoxStyle}" >
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox x:Name="ChckBox" IsChecked="{Binding Path=IsChecked}" >
+                                    <CheckBox x:Name="ChckBox" IsChecked="{Binding Path=IsChecked}" Click="ChckBox_Click" >
                                         <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=Description}"></TextBlock>
                                     </CheckBox>
                                 </DataTemplate>
@@ -114,7 +133,7 @@
                         <ListBox   x:Name="GroupList"  Style="{StaticResource ListCheckBoxStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding Path=Name}"  IsChecked="{Binding Path=IsChecked}"/>
+                                    <CheckBox Content="{Binding Path=Name}"  IsChecked="{Binding Path=IsChecked}" Click="CheckBox_Click" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -136,7 +155,7 @@
                                     x:Name="ProjectList"  Style="{StaticResource ListCheckBoxStyle}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.IsDeferredScrollingEnabled="True">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Content="{Binding Path=ProjectName}" IsChecked="{Binding Path=IsChecked}"/>
+                                    <CheckBox x:Name="ProjectCheckbox" Content="{Binding Path=ProjectName}" IsChecked="{Binding Path=IsChecked}" Click="ProjectCheckbox_Click" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
