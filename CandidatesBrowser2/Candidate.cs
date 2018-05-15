@@ -23,11 +23,13 @@ namespace CandidatesBrowser2
             public string SecondPhone { get; set; }
             public int AttendedProjects { get; set; }
             public bool IsCvReceived { get; set; }
+            public bool IsCvUploaded { get; set; }
 
-            public Candidate(int id, string firstName, string lastName,
+        public Candidate(int id, string firstName, string lastName,
                     string firstEmail, string secondEmail,
                     string firstPhone, string secondPhone,
-                    int attendedProjects, bool isCvReceived)
+                    int attendedProjects, bool isCvReceived,
+                    bool isCvUploaded)
             {
                 this.ID = id;
                 this.FirstName = firstName;
@@ -38,6 +40,7 @@ namespace CandidatesBrowser2
                 this.SecondPhone = secondPhone;
                 this.AttendedProjects = attendedProjects;
                 this.IsCvReceived = isCvReceived;
+                this.IsCvUploaded = isCvUploaded;
             }
 
         public static ObservableCollection<Candidate> CreateCandidatesCollection(DataTable DataT)
@@ -57,7 +60,8 @@ namespace CandidatesBrowser2
                         firstPhone: row["1ST_TEL"].ToString(),
                         secondPhone: row["2ND_TEL"].ToString(),
                         attendedProjects: int.Parse(row["ATTENDED_PROJECTS"].ToString()),
-                        isCvReceived: bool.Parse(row["CV_RECEIVED"].ToString())
+                        isCvReceived: bool.Parse(row["CV_RECEIVED"].ToString()),
+                        isCvUploaded: bool.Parse(row["CV_UPLOADED"].ToString())
                         )
                       );
             }

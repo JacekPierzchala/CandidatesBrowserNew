@@ -17,7 +17,7 @@ namespace CandidatesBrowser2
             IF OBJECT_ID('tempdb.dbo.#CV_REC', 'U') IS NOT NULL DROP TABLE #CV_REC;
 
             SELECT [ID],[FIRST_NAME],[LAST_NAME] ,[1ST_@]
-                 ,[2ND_@],[1ST_TEL],[2ND_TEL]
+                 ,[2ND_@],[1ST_TEL],[2ND_TEL], [CV_UPLOADED]
                 INTO #CAND
             FROM [CANDIDATES]
 
@@ -36,7 +36,7 @@ namespace CandidatesBrowser2
      ,[2ND_@],[1ST_TEL],[2ND_TEL],ATTENDED_PROJECTS,
       CAST (
              (CASE WHEN #CV_REC.CANDIDATE_ID IS NOT NULL THEN 1
-             ELSE 0 END) AS BIT) CV_RECEIVED
+             ELSE 0 END) AS BIT) CV_RECEIVED, CV_UPLOADED
          FROM #CAND INNER JOIN #PROJECTS ON #CAND.ID=#PROJECTS.CANDIDATE_ID
 			        LEFT JOIN #CV_REC ON #CAND.ID=#CV_REC.CANDIDATE_ID";
 

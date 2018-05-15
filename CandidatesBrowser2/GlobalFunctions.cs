@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Reflection;
 
 namespace CandidatesBrowser2
 {
@@ -15,6 +17,9 @@ namespace CandidatesBrowser2
         }
     class GlobalFunctions
     {
+
+        public static string appPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        public static string CVfolderPath = appPath + "\\source\\CV\\";
 
         public static string connectionStringZaneta = @"Server=ZANETA-PC\SQLEXPRESS;database=Candidates;integrated Security=SSPI";
         public static string connectionStringMichal = @"Server=DESKTOP-3U4D69V\SQLEXPRESS;database=Candidates;integrated Security=SSPI";

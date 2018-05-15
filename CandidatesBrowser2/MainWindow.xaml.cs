@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 
 namespace CandidatesBrowser2
@@ -72,6 +73,18 @@ namespace CandidatesBrowser2
                
             }
 
+            try
+            {
+                if (!Directory.Exists(GlobalFunctions.CVfolderPath))
+                {
+                    Directory.CreateDirectory(GlobalFunctions.CVfolderPath);
+                }
+            }
+
+            catch
+            {
+
+            }
 
             try
             {
@@ -334,6 +347,26 @@ namespace CandidatesBrowser2
                 StatusSelectAllCheckbox.IsChecked = false;
         }
 
+        private void ProjectCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
+
+            foreach (Project item in ProjectList.Items)
+            {
+                if (item.IsChecked)
+                {
+                    i++;
+                }
+            }
+
+            if (i == ProjectList.Items.Count)
+            {
+                ProjectSelectAllCheckbox.IsChecked = true;
+            }
+            else
+                ProjectSelectAllCheckbox.IsChecked = false;
+        }
+
 
         #endregion
 
@@ -420,6 +453,7 @@ namespace CandidatesBrowser2
 
         #endregion
 
+
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
             string area = "|";
@@ -488,9 +522,16 @@ namespace CandidatesBrowser2
             else if (CVrEceivedNo.IsChecked == true)
                 CvReceived = false;
 
+            bool? CvUploaded = null;
+
+            if (CvUploadedYes.IsChecked == true)
+                CvUploaded = true;
+            else if (CvUploadedNo.IsChecked == true)
+                CvUploaded = false;
+
             CandidatesDT = GlobalFunctions.GetTableFromServerArgs("SEARCH_CANDIDATE", "@FIRST_NAME"+ "-"+ firstName, "@LAST_NAME" + "-" + lastName,
               "@POSITION" + "-" + position, "@PROJECT" + "-" + project, "@AREA" + "-" + area, "@GROUP" + "-" + group, "@STATUS"+ "-" + status
-              , "@CVRECEIVED" + "-" + CvReceived);
+              , "@CVRECEIVED" + "-" + CvReceived, "@CV_UPLOADED" + "-" + CvUploaded);
 
             CandidatesCollection = Candidate.CreateCandidatesCollection(CandidatesDT);
 
@@ -504,6 +545,7 @@ namespace CandidatesBrowser2
             FirstNametxt.Text = "";
             Positiontxt.Text = "";
             CVrEceivedAll.IsChecked = true;
+            CvUploadedAll.IsChecked = true;
 
             ProjectSelectAllCheckbox.IsChecked = true;
             ProjectSelectAllCheckbox_Click(this, e);
@@ -515,31 +557,36 @@ namespace CandidatesBrowser2
             AreaSelectAllCheckbox_Click(this, e);
         }
 
-        private void attachMenuItem_Click(object sender, RoutedEventArgs e)
+
+        private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-   
-
-        private void ProjectCheckbox_Click(object sender, RoutedEventArgs e)
-        {
-            int i = 0;
-
-            foreach (Project item in ProjectList.Items)
+            if (MainView.SelectedItems.Count == 1 && ((Candidate)MainView.SelectedItem).IsCvUploaded)
             {
-                if (item.IsChecked)
-                {
-                    i++;
-                }
-            }
-
-            if (i == ProjectList.Items.Count)
-            {
-                ProjectSelectAllCheckbox.IsChecked = true;
+                readMenuItem.IsEnabled = true;
             }
             else
-                ProjectSelectAllCheckbox.IsChecked = false;
+            {
+                readMenuItem.IsEnabled = false;
+            }
+
+            if (MainView.SelectedItems.Count == 1 && ((Candidate)MainView.SelectedItem).IsCvUploaded)
+            {
+                removeMenuItem.IsEnabled = true;
+            }
+            else
+            {
+                removeMenuItem.IsEnabled = false;
+            }
+
+
+            if (MainView.SelectedItems.Count == 1)
+            {
+                attachMenuItem.IsEnabled = true;
+            }
+            else
+            {
+                attachMenuItem.IsEnabled = false;
+            }
         }
     }
 }
