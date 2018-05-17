@@ -25,7 +25,53 @@ namespace CandidatesBrowser2
         public static string connectionStringMichal = @"Server=DESKTOP-3U4D69V\SQLEXPRESS;database=Candidates;integrated Security=SSPI";
         public static string connectionString;
 
-        public  static DataTable GetTableFromSQL(string sql)
+        public static string ReadScalar(string SQL)
+        {
+            DataTable results = new DataTable();
+            SqlConnection connection = new SqlConnection(connectionString);
+            
+            string result = null;
+            SqlCommand command = new SqlCommand(SQL, connection);
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+            int attemp = 1;
+            bool success = false;
+
+            for (attemp = 1; attemp < 4; attemp++)
+            {
+                if (success == true)
+                {
+                    break;
+                }
+                else
+                {
+                    try
+                    {
+                        connection.Open();
+                        success = true;
+                    }
+                    catch
+                    {
+                       // string x = MessageBox.Show("System tried " + attemp + "time(s) to connect the database. Would you like to continue?", "Connection issue", MessageBoxButtons.YesNo).ToString();
+
+                    }
+                }
+
+            }
+
+
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            reader.Read();
+            if (reader.HasRows == true)
+            { result = reader[0].ToString(); }
+            connection.Close();
+            return result;
+
+        }
+
+
+        public static DataTable GetTableFromSQL(string sql)
         {
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, connectionString);
            

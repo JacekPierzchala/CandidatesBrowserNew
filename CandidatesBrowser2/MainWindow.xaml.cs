@@ -44,21 +44,36 @@ namespace CandidatesBrowser2
         public ObservableCollection<Project> ProjectFiltered;
         public ObservableCollection<Area> AreaFiltered;
 
+        public static string Key;
+
+        public static MainWindow MainWindStatic;
+
         PcName pcmane;
         #endregion
 
+
         public MainWindow()
         {
+
             ParseArgs();
             LoadData();
-  
+
+            Key = GlobalFunctions.ReadScalar(SQLs.key);
+
+            PasswordWindow pass = new PasswordWindow();
+            pass.Show();
+
+
             InitializeComponent();
 
+            
             MainView.ItemsSource = CandidatesCollection;
             StatusCombo.ItemsSource = StatusCollection;
             AreaCombo.ItemsSource = AreaCollection;
             ProjectList.ItemsSource = ProjectsCollection;
             GroupList.ItemsSource = GroupCollection;
+            MainWindStatic = this;
+            MainWindowView.Hide();
         }
 
         void ParseArgs()
@@ -77,8 +92,16 @@ namespace CandidatesBrowser2
             {
                 if (!Directory.Exists(GlobalFunctions.CVfolderPath))
                 {
-                    Directory.CreateDirectory(GlobalFunctions.CVfolderPath);
+                    DirectoryInfo di =Directory.CreateDirectory(GlobalFunctions.CVfolderPath);
+                    di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
                 }
+                else
+                {
+                    DirectoryInfo di = new DirectoryInfo(GlobalFunctions.CVfolderPath);
+                    di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+                }
+
+                
             }
 
             catch
@@ -587,6 +610,12 @@ namespace CandidatesBrowser2
             {
                 attachMenuItem.IsEnabled = false;
             }
+        }
+
+
+        public static void ShowWindow()
+        {
+            
         }
     }
 }

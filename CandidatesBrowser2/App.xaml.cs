@@ -24,11 +24,15 @@ namespace CandidatesBrowser2
                 Args = e.Args;
                
             }
+
            
+
             SplashScreen sc = new SplashScreen("cv_image.png");
 
             sc.Show(false, true);
             sc.Close(TimeSpan.FromMilliseconds(1500));
+
+
         }
     }
 }

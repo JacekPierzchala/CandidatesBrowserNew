@@ -72,5 +72,11 @@ namespace CandidatesBrowser2
         public static string Groups = @"SELECT  [ID],[NAME]
                                         FROM [CONFIG_GROUP] ORDER BY NAME";
         #endregion
+
+        #region Aux
+
+        public static string key = "SELECT [KEY] FROM [KEY]";
+
+        #endregion
     }
 }

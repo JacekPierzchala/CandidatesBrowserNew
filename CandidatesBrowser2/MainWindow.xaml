@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:CandidatesBrowser2"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        Title="MainWindow" Height="700" Width="1100" MaxWidth="1400" MinWidth="1100" x:Name="MainWindowView">
+        Title="MainWindow" Height="700" Width="1100" MaxWidth="1400" MinWidth="1100" x:Name="MainWindowView" Icon="cv_icon_QsY_icon.ico">
     <Window.Resources>
         
     </Window.Resources>
