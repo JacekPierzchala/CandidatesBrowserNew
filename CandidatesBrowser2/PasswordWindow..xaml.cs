@@ -19,6 +19,8 @@ namespace CandidatesBrowser2
     /// </summary>
     public partial class PasswordWindow : Window
     {
+        public bool correct = false;
+        
         public PasswordWindow()
         {
             InitializeComponent();           
@@ -29,6 +31,7 @@ namespace CandidatesBrowser2
         {
             if (Passwordfield.Password.ToString()== MainWindow.Key)
             {
+                correct = true;
                 this.Close();
                 MainWindow.MainWindStatic.Show();
             }
@@ -37,10 +40,7 @@ namespace CandidatesBrowser2
                 
                 if (MessageBox.Show("Provided password is not correct.", "Incorrect password", MessageBoxButton.OKCancel)== MessageBoxResult.Cancel)
                 {
-                    this.Close();
-                    System.Windows.Application.Current.Shutdown();
-                    Environment.Exit(0);
-                    return;
+                    this.Close();                                      
                 }
                
                 
@@ -50,9 +50,14 @@ namespace CandidatesBrowser2
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //this.Close();
-            System.Windows.Application.Current.Shutdown();
-            Environment.Exit(0);
-            return;
+            if (!correct)
+            {
+                System.Windows.Application.Current.Shutdown();
+                Environment.Exit(0);
+                return;
+            }
+
+               
         }
     }
 }
