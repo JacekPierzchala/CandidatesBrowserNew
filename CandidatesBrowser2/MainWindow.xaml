@@ -195,23 +195,25 @@
             <DataGrid.ContextMenu>
                 <ContextMenu x:Name="ContextMenu"  Opened="ContextMenu_Opened">
 
-                    <MenuItem x:Name="readMenuItem"  >
+                    <MenuItem x:Name="readMenuItem" Click="readMenuItem_Click" >
                         <MenuItem.Icon>
                             <Image Source="magnifying_glass.ico"/>
                         </MenuItem.Icon>
                         Read CV</MenuItem>
-                    <MenuItem x:Name="attachMenuItem" >
+                    <MenuItem x:Name="attachMenuItem" Click="attachMenuItem_Click" >
                         <MenuItem.Icon>
                             <Image Source="clip.ico"/>
                         </MenuItem.Icon>
                         Attach CV
                     </MenuItem>
-                    <MenuItem x:Name="removeMenuItem" >
+                    <MenuItem x:Name="removeMenuItem" Click="removeMenuItem_Click" >
                         <MenuItem.Icon>
                             <Image Source="removeIcon.ico"/>
                         </MenuItem.Icon>
                         Remove CV
                     </MenuItem>
+                    
+                    
                 </ContextMenu>
             </DataGrid.ContextMenu>
             

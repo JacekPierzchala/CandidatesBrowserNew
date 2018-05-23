@@ -11,8 +11,7 @@ namespace CandidatesBrowser2
 {
   
 
-    
-        public class Candidate
+        public class Candidate :INotifyPropertyChanged
         {
             public int ID { get; set; }
             public string FirstName { get; set; }
@@ -23,7 +22,28 @@ namespace CandidatesBrowser2
             public string SecondPhone { get; set; }
             public int AttendedProjects { get; set; }
             public bool IsCvReceived { get; set; }
-            public bool IsCvUploaded { get; set; }
+            public bool IsCvUploaded
+            {
+                    get
+                    {
+                        return _isCvUploaded;
+                    }
+
+                    set
+                    {
+                     _isCvUploaded = value;
+                    if (PropertyChanged !=null)
+                            {
+                             PropertyChanged(this, new PropertyChangedEventArgs("IsCvUploaded"));
+                            }
+                    }
+
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            private bool _isCvUploaded;
+        
 
         public Candidate(int id, string firstName, string lastName,
                     string firstEmail, string secondEmail,

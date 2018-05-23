@@ -7,6 +7,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
+using System.Windows.Xps.Packaging;
+using Microsoft.Office.Interop.Word;
+using Microsoft.Win32;
+using Word = Microsoft.Office.Interop.Word;
+using System.Windows;
 
 namespace CandidatesBrowser2
 {
@@ -27,7 +32,7 @@ namespace CandidatesBrowser2
 
         public static string ReadScalar(string SQL)
         {
-            DataTable results = new DataTable();
+            System.Data.DataTable results = new System.Data.DataTable();
             SqlConnection connection = new SqlConnection(connectionString);
             
             string result = null;
@@ -71,7 +76,7 @@ namespace CandidatesBrowser2
         }
 
 
-        public static DataTable GetTableFromSQL(string sql)
+        public static System.Data.DataTable GetTableFromSQL(string sql)
         {
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, connectionString);
            
@@ -79,18 +84,18 @@ namespace CandidatesBrowser2
 
             dataAdapter.SelectCommand.CommandTimeout = 1000;
             //dataAdapter.SelectCommand.Parameters.Add()
-            DataTable table = new DataTable();
+            System.Data.DataTable table = new System.Data.DataTable();
             table.Locale = System.Globalization.CultureInfo.InvariantCulture;
             dataAdapter.Fill(table);
             return table;
         }
 
-        public static DataTable GetTableFromServerArgs( string procedureName ,params string [] ArgsValues)
+        public static System.Data.DataTable GetTableFromServerArgs( string procedureName ,params string [] ArgsValues)
         {
             SqlConnection sqlConnection = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand();
             SqlDataReader reader;
-            DataTable table = new DataTable();
+            System.Data.DataTable table = new System.Data.DataTable();
             cmd.CommandText = procedureName;
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 1000;
@@ -119,5 +124,141 @@ namespace CandidatesBrowser2
             sqlConnection.Close();
             return table;
         }
+
+        public static void ExecProcedureWithArgs(string procedureName, params string[] ArgsValues)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand();
+           
+            cmd.CommandText = procedureName;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 1000;
+            cmd.Connection = sqlConnection;
+            sqlConnection.Open();
+
+            foreach (string param in ArgsValues)
+            {
+                string paramName = param.Substring(0, param.IndexOf("-"));
+                string paramValue = null;
+                if (param.IndexOf("-") != param.Length - 1)
+                {
+                    paramValue = param.Substring(param.IndexOf("-") + 1, param.Length - param.IndexOf("-") - 1);
+
+                }
+                cmd.Parameters.AddWithValue(paramName, paramValue);
+            }
+
+
+
+
+            cmd.ExecuteNonQuery();
+        }
+
+        public static bool IsFileLocked(string file)
+        {
+            FileStream stream = null;
+
+            try
+            {
+                stream = new FileStream(file, FileMode.Open, FileAccess.Read);
+                
+               if (stream.Length<=2000)
+                {
+                    return true;
+                }
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+            finally
+            {
+                if (stream != null)
+                    stream.Close();
+            }
+
+            //file is not locked
+            return false;
+        }
+
+        public static void ReadWordFile(string wordFilename)
+        {
+
+            // Create a WordApplication and host word document 
+            Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
+            try
+            {  
+                
+
+                if (!IsFileLocked(wordFilename))
+                {
+                    wordApp.Documents.Open(wordFilename, ReadOnly: false);
+                }
+                else
+                {
+                    wordApp.Documents.Open(wordFilename, ReadOnly: true);
+                }
+               // wordApp.Documents.Open(wordFilename,true);
+               
+               
+
+                // To Invisible the word document 
+                wordApp.Application.Visible = true;
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error occurs, The error message is  " + ex.ToString());
+                return ;
+            }
+            //finally
+            //{
+            //    wordApp.Documents.Close();
+            //    ((_Application)wordApp).Quit(WdSaveOptions.wdDoNotSaveChanges);
+            //}
+        }
+
+        public static XpsDocument ConvertWordToXps(string wordFilename, string xpsFilename)
+        {
+            // Create a WordApplication and host word document 
+            Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
+            try
+            {
+                wordApp.Documents.Open(wordFilename);
+
+                // To Invisible the word document 
+                wordApp.Application.Visible = true;
+
+
+                // Minimize the opened word document 
+                wordApp.WindowState = WdWindowState.wdWindowStateMinimize;
+
+
+                Document doc = wordApp.ActiveDocument;
+
+
+                doc.SaveAs(xpsFilename, WdSaveFormat.wdFormatXPS);
+
+
+                XpsDocument xpsDocument = new XpsDocument(xpsFilename, FileAccess.Read);
+                return xpsDocument;
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Error occurs, The error message is  " + ex.ToString());
+                return null;
+            }
+            finally
+            {
+                wordApp.Documents.Close();
+                ((_Application)wordApp).Quit(WdSaveOptions.wdDoNotSaveChanges);
+            }
+        }
+
     }
 }
+

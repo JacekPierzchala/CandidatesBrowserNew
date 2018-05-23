@@ -17,6 +17,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using Microsoft.Win32;
+using System.Windows.Xps.Packaging;
 
 
 namespace CandidatesBrowser2
@@ -580,7 +582,7 @@ namespace CandidatesBrowser2
             AreaSelectAllCheckbox_Click(this, e);
         }
 
-
+        #region ContextMenu
         private void ContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             if (MainView.SelectedItems.Count == 1 && ((Candidate)MainView.SelectedItem).IsCvUploaded)
@@ -612,10 +614,130 @@ namespace CandidatesBrowser2
             }
         }
 
-
-        public static void ShowWindow()
+        private void readMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            string dectinationDirectory = GlobalFunctions.CVfolderPath + ((Candidate)MainView.SelectedItem).ID.ToString() + "\\";
+
+            string [] files = Directory.GetFiles(dectinationDirectory);
+
+
+            foreach (string file in files)
+            {
+               
+                if (!file.Contains("~"))
+                {
+                    System.Diagnostics.Process.Start(file);
+                    //GlobalFunctions.ReadWordFile(file);
+                }
+               
+                //XpsDocument xpsDocument=GlobalFunctions.ConvertWordToXps(file, System.IO.Path.GetFileName(file));
+                
+            }
+
+        }
+
+        private void attachMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Word files(*.doc)|*.doc|PDF files(*.pdf)|*.pdf";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFileDialog.ShowDialog();
+            string  sourceFile= openFileDialog.FileName.ToString();
+            if (!string.IsNullOrEmpty(sourceFile))
+            {
+                saveFile(sourceFile, ((Candidate)MainView.SelectedItem).ID.ToString());
+            }
+           
+        }
+
+        private void removeFile(string filePath, string dectinationDirectory)
+        {
+            if (!GlobalFunctions.IsFileLocked(filePath))
+            {
+                try
+                {
+                    string[] files = Directory.GetFiles(dectinationDirectory);
+                    File.Delete(filePath);
+                    if (files.Length == 1)
+                    {
+                        ((Candidate)MainView.SelectedItem).IsCvUploaded = false;
+
+                        GlobalFunctions.ExecProcedureWithArgs("UPDATE_CV", "@ID" + "-" + ((Candidate)MainView.SelectedItem).ID, "@CV_UPLOADED" + "-" + false);
+
+                    }
+                    MessageBox.Show("File deleted succesfully ", "",MessageBoxButton.OK,MessageBoxImage.Information);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("File was not deleted! " + ex.Message,"",MessageBoxButton.OK,MessageBoxImage.Error);
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("File is currently locked, cannot be deleted", "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+           
+        }
+
+        private void removeMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string dectinationDirectory = GlobalFunctions.CVfolderPath + ((Candidate)MainView.SelectedItem).ID.ToString() + "\\";
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+           // openFileDialog.Filter = "Word files(*.doc)|*.doc|PDF files(*.pdf)|*.pdf";
+            openFileDialog.InitialDirectory = dectinationDirectory;
+            
+            openFileDialog.ShowDialog();
+            string sourceFile = openFileDialog.FileName.ToString();
+
+           
+                if (!string.IsNullOrEmpty(sourceFile))
+                {
+                    removeFile(sourceFile, dectinationDirectory);
+                }
+            
             
         }
+
+        private void saveFile(string sourceFilePath, string id)
+        {
+            string fileName = System.IO.Path.GetFileName(sourceFilePath);
+            string dectinationDirectory= GlobalFunctions.CVfolderPath+  id + "\\";
+            if (!Directory.Exists(dectinationDirectory))
+            {
+                Directory.CreateDirectory(dectinationDirectory);
+            }
+            if (File.Exists(dectinationDirectory + fileName))
+            {
+              
+                if ((MessageBox.Show("File you are trying to copy already exists in this folder. Would you like to remove old one?", "", MessageBoxButton.YesNo))==MessageBoxResult.Yes)
+                {
+
+
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            try
+            {
+                File.Copy(sourceFilePath, dectinationDirectory + fileName);
+                ((Candidate)MainView.SelectedItem).IsCvUploaded = true;
+                GlobalFunctions.ExecProcedureWithArgs("UPDATE_CV", "@ID" + "-" + ((Candidate)MainView.SelectedItem).ID, "@CV_UPLOADED" + "-" + true);
+                MessageBox.Show("File attached succesfully ", "", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("File was not deleted! " + ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+
+
+        }
+
+        #endregion
     }
 }
