@@ -44,6 +44,7 @@ namespace CandidatesBrowser2
 
             private bool _isCvUploaded;
         
+        public Candidate() { }
 
         public Candidate(int id, string firstName, string lastName,
                     string firstEmail, string secondEmail,
@@ -92,6 +93,106 @@ namespace CandidatesBrowser2
 
         }
 
+        public class CandidateDetails 
+        {
+
+        public CandidateDetails() { }
+
+        public CandidateDetails(int candidateId,int configCompanyID, string position, int configProjectId,
+                                string companyName, string projectName, string areaName, string groupName
+                                )
+        {
+            this.CandidateId = candidateId;
+            this.ConfigCompanyID = configCompanyID;
+            this.Position = position;
+            this.ConfigProjectId = configProjectId;
+            this.CompanyName = companyName;
+            this.ProjectName = projectName;
+            this.AreaName = areaName;
+            this.GroupName = GroupName;
+        }
+
+        private int _candidateId;
+        public int CandidateId
+        {
+            get { return _candidateId; }
+            set { _candidateId = value; }
+        }
+
+        private int _configCompanyID;
+        public int ConfigCompanyID
+        {
+            get { return _configCompanyID; }
+            set { _configCompanyID = value; }
+        }
+
+        private string _position;
+        public string Position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
+
+        private int _configProjectId;
+        public int ConfigProjectId
+        {
+            get { return _configProjectId; }
+            set { _configProjectId = value; }
+        }
+
+        private string _companyName;
+        public string CompanyName
+        {
+            get { return _companyName; }
+            set { _companyName = value; }
+        }
+
+        private string _projectName;
+        public string ProjectName
+        {
+            get { return _projectName; }
+            set { _projectName = value; }
+        }
+
+        private string _areaName;
+        public string AreaName
+        {
+            get { return _areaName; }
+            set { _areaName = value; }
+        }
+
+        private string _groupName;
+
+        public string GroupName
+        {
+            get { return _groupName; }
+            set { _groupName = value; }
+        }
+
+
+        public static ObservableCollection<CandidateDetails> CreateAreaCollection(DataTable DataT)
+        {
+            ObservableCollection<CandidateDetails> CandidateDetailsCollection = new ObservableCollection<CandidateDetails>();
+
+            foreach (DataRow row in DataT.Rows)
+            {
+                CandidateDetailsCollection.Add
+                    (
+                    new CandidateDetails(
+                             candidateId: int.Parse(row["CANDIDATE_ID"].ToString()),
+                             configCompanyID: int.Parse(row["CONFIG_COMPANY_ID"].ToString()),
+                             areaName: row["AREA_NAME"].ToString(),
+                             companyName: row["COMPANY_NAME"].ToString(),
+                             configProjectId: int.Parse(row["CONFIG_COMPANY_ID"].ToString()),
+                             groupName: row["GROUP_NAME"].ToString(),
+                             position: row["POSITION"].ToString(),
+                             projectName: row["PROJECT_NAME"].ToString()
+                             )
+                     );
+            }
+            return CandidateDetailsCollection;
+        }
+    }
        
         public class Area : INotifyPropertyChanged
         {

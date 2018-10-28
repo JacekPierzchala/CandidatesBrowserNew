@@ -8,10 +8,12 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 using System.Windows.Xps.Packaging;
-using Microsoft.Office.Interop.Word;
+using Microsoft.Office.Interop.Excel;
+
 using Microsoft.Win32;
-using Word = Microsoft.Office.Interop.Word;
+
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace CandidatesBrowser2
 {
@@ -185,80 +187,85 @@ namespace CandidatesBrowser2
             return false;
         }
 
-        public static void ReadWordFile(string wordFilename)
+
+
+        public static void ExportToExcel(System.Data.DataTable DT)
         {
 
-            // Create a WordApplication and host word document 
-            Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
-            try
-            {  
-                
 
-                if (!IsFileLocked(wordFilename))
-                {
-                    wordApp.Documents.Open(wordFilename, ReadOnly: false);
-                }
-                else
-                {
-                    wordApp.Documents.Open(wordFilename, ReadOnly: true);
-                }
-               // wordApp.Documents.Open(wordFilename,true);
-               
-               
+            Microsoft.Office.Interop.Excel.Application xlexcel;
+            Microsoft.Office.Interop.Excel.Workbook xlWorkBook;
+            Microsoft.Office.Interop.Excel.Worksheet xlWorkSheet;
+            object misValue = System.Reflection.Missing.Value;
+            xlexcel = new Microsoft.Office.Interop.Excel.Application();
+            xlexcel.Visible = false;
+            xlexcel.DisplayAlerts = false;
+            xlWorkBook = xlexcel.Workbooks.Add(misValue);
+            xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
 
-                // To Invisible the word document 
-                wordApp.Application.Visible = true;
-            }
-
-            catch (Exception ex)
+            for (int i = 0; i < DT.Columns.Count; i++)
             {
-                MessageBox.Show("Error occurs, The error message is  " + ex.ToString());
-                return ;
+                xlWorkSheet.Cells[1, i + 1] = DT.Columns[i].ColumnName.ToString();
             }
-            //finally
-            //{
-            //    wordApp.Documents.Close();
-            //    ((_Application)wordApp).Quit(WdSaveOptions.wdDoNotSaveChanges);
-            //}
+
+            for (int i = 0; i < DT.Rows.Count; i++)
+            {
+                // to do: format datetime values before printing
+                for (int j = 0; j < DT.Columns.Count; j++)
+                {
+                    xlWorkSheet.Cells[(i + 2), (j + 1)] = DT.Rows[i][j].ToString();
+                        
+                }
+            }
+
+
+            Microsoft.Office.Interop.Excel.Range MainRange = xlWorkSheet.UsedRange;
+
+
+            int lastcol = MainRange.Columns.Count;
+
+            for (int i = 1; i <= lastcol; i++)
+            {
+                Microsoft.Office.Interop.Excel.Range allColumns = (Microsoft.Office.Interop.Excel.Range)xlWorkSheet.Columns[i];
+                allColumns.AutoFit();
+            }
+
+            Microsoft.Office.Interop.Excel.Range HeaderRow = (Microsoft.Office.Interop.Excel.Range)xlWorkSheet.Range[xlWorkSheet.Cells[1, 1], xlWorkSheet.Cells[1, lastcol]];
+            HeaderRow.Cells.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbLightGray;
+            HeaderRow.Cells.Font.Bold = true;
+            MainRange.Borders.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbBlack;
+            xlexcel.Visible = true;
+            MessageBox.Show("file is ready", "",MessageBoxButton.OK);
+
+
         }
 
-        public static XpsDocument ConvertWordToXps(string wordFilename, string xpsFilename)
+        public static System.Data.DataTable ToDataTable<T>(ObservableCollection<T> items)
         {
-            // Create a WordApplication and host word document 
-            Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
-            try
+            System.Data.DataTable dataTable = new System.Data.DataTable(typeof(T).Name);
+
+            //Get all the properties
+            PropertyInfo[] Props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo prop in Props)
             {
-                wordApp.Documents.Open(wordFilename);
-
-                // To Invisible the word document 
-                wordApp.Application.Visible = true;
-
-
-                // Minimize the opened word document 
-                wordApp.WindowState = WdWindowState.wdWindowStateMinimize;
-
-
-                Document doc = wordApp.ActiveDocument;
-
-
-                doc.SaveAs(xpsFilename, WdSaveFormat.wdFormatXPS);
-
-
-                XpsDocument xpsDocument = new XpsDocument(xpsFilename, FileAccess.Read);
-                return xpsDocument;
+                //Defining type of data column gives proper data table 
+                var type = (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>) ? Nullable.GetUnderlyingType(prop.PropertyType) : prop.PropertyType);
+                //Setting column names as Property names
+                dataTable.Columns.Add(prop.Name, type);
             }
-            catch (Exception ex)
+            foreach (T item in items)
             {
-                //MessageBox.Show("Error occurs, The error message is  " + ex.ToString());
-                return null;
+                var values = new object[Props.Length];
+                for (int i = 0; i < Props.Length; i++)
+                {
+                    //inserting property values to datatable rows
+                    values[i] = Props[i].GetValue(item, null);
+                }
+                dataTable.Rows.Add(values);
             }
-            finally
-            {
-                wordApp.Documents.Close();
-                ((_Application)wordApp).Quit(WdSaveOptions.wdDoNotSaveChanges);
-            }
+            //put a breakpoint here and check datatable
+            return dataTable;
         }
-
     }
 }
 

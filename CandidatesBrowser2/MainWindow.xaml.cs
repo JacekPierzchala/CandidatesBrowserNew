@@ -627,10 +627,10 @@ namespace CandidatesBrowser2
                 if (!file.Contains("~"))
                 {
                     System.Diagnostics.Process.Start(file);
-                    //GlobalFunctions.ReadWordFile(file);
+                  
                 }
                
-                //XpsDocument xpsDocument=GlobalFunctions.ConvertWordToXps(file, System.IO.Path.GetFileName(file));
+                
                 
             }
 
@@ -639,7 +639,7 @@ namespace CandidatesBrowser2
         private void attachMenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Word files(*.doc)|*.doc|PDF files(*.pdf)|*.pdf";
+            //openFileDialog.Filter = "Word files(*.doc)|*.doc|PDF files(*.pdf)|*.pdf";
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             openFileDialog.ShowDialog();
             string  sourceFile= openFileDialog.FileName.ToString();
@@ -739,5 +739,22 @@ namespace CandidatesBrowser2
         }
 
         #endregion
+
+      
+
+        private void exportToExcelItem_Click(object sender, RoutedEventArgs e)
+        {
+            
+            DataTable dt = GlobalFunctions.ToDataTable<Candidate>((ObservableCollection<Candidate>)MainView.ItemsSource);
+            GlobalFunctions.ExportToExcel(dt);
+        }
+
+        private void readDetailsItem_Click(object sender, RoutedEventArgs e)
+        {
+            CandididateDetailsWindow DetailsWindow = new CandididateDetailsWindow(((Candidate)MainView.SelectedItem));
+            DetailsWindow.Show();
+            
+
+        }
     }
 }

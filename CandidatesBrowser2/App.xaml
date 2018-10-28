@@ -13,6 +13,14 @@
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         </Style>
 
+        <Style TargetType="{x:Type TextBox}" x:Key="txtBoxStyledetails">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
         <ControlTemplate x:Key="LabelTemplate" TargetType="{x:Type Label}">
             <Border CornerRadius="100" BorderThickness="1">
                 <Label Padding="1"  Content="{Binding RelativeSource={RelativeSource TemplatedParent},Path=Content}" Background="Khaki" ></Label>

@@ -9,265 +9,291 @@
     <Window.Resources>
         
     </Window.Resources>
-    <Grid Margin="1">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
 
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
-        </Grid.RowDefinitions>
-        
-        <StackPanel Margin="2" Grid.Column="0" Background="BlanchedAlmond" Orientation="Vertical" Grid.RowSpan="2">
-            <Border CornerRadius="100" BorderThickness="3"  Width="300">
-                <Button Margin="2" x:Name="searchButton" Click="searchButton_Click">Search</Button>
-            </Border>
-            <Border CornerRadius="100" BorderThickness="3"  Width="300">
-                <Button Margin="2" x:Name="clearButton" Click="clearButton_Click">Clear</Button>
-            </Border>
-            <GroupBox>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <Label  VerticalAlignment="Center">CV Received </Label>
-                    <Border CornerRadius="100" BorderThickness="3"  Width="210">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <Label>All:</Label>
-                            <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedAll" IsChecked="True"></RadioButton>
-                            <Label>Yes:</Label>
-                            <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedYes" ></RadioButton>
-                            <Label>No:</Label>
-                            <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedNo" ></RadioButton>
-                        </StackPanel>
-                        
-                    </Border>
-                 
-                </StackPanel>
-               
-                
-            </GroupBox>
+    <DockPanel>
+        <Menu x:Name="ReportsMenu" DockPanel.Dock="Top">
+            <MenuItem Header="Reports">
+                <MenuItem x:Name="exportToExcelItem" Header="Export to Excel"  Click="exportToExcelItem_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="excel.ico" Height="26" Width="30"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+
+        </Menu>
+        <Grid Margin="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+
+          
 
 
-            <GroupBox>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <Label  VerticalAlignment="Center">CV Uploaded</Label>
-                    <Border CornerRadius="100" BorderThickness="3"  Width="210">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <Label>All:</Label>
-                            <RadioButton VerticalAlignment="Center" x:Name="CvUploadedAll" IsChecked="True"></RadioButton>
-                            <Label>Yes:</Label>
-                            <RadioButton VerticalAlignment="Center" x:Name="CvUploadedYes" ></RadioButton>
-                            <Label>No:</Label>
-                            <RadioButton VerticalAlignment="Center" x:Name="CvUploadedNo" ></RadioButton>
-                        </StackPanel>
+            <StackPanel Margin="2" Grid.Column="0" Background="BlanchedAlmond" Orientation="Vertical" Grid.RowSpan="2">
 
-                    </Border>
+                <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                    <Button Margin="2" x:Name="searchButton" Click="searchButton_Click">Search</Button>
+                </Border>
+                <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                    <Button Margin="2" x:Name="clearButton" Click="clearButton_Click">Clear</Button>
+                </Border>
+                <GroupBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <Label  VerticalAlignment="Center">CV Received</Label>
+                        <Border CornerRadius="100" BorderThickness="3"  Width="210">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <Label>All:</Label>
+                                <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedAll" IsChecked="True"></RadioButton>
+                                <Label>Yes:</Label>
+                                <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedYes" ></RadioButton>
+                                <Label>No:</Label>
+                                <RadioButton VerticalAlignment="Center" x:Name="CVrEceivedNo" ></RadioButton>
+                            </StackPanel>
 
-                </StackPanel>
+                        </Border>
 
-
-            </GroupBox>
-
-            <Border CornerRadius="100" BorderThickness="3"  Width="300">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Width="150" x:Name="FirstNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
-                    <Label>FirstName</Label>
-                   
-                </StackPanel>
-            </Border>
-
-            <Border CornerRadius="100" BorderThickness="3"  Width="300">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Width="150" x:Name="LastNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
-                    <Label>LastName</Label>
-                    
-                </StackPanel>
-            </Border>
-            <Border CornerRadius="100" BorderThickness="3"  Width="300">
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Width="150" x:Name="Positiontxt" Style="{StaticResource TextBoxStyle}"></TextBox>
-                    <Label>Position</Label>
-                </StackPanel>
-            </Border>
-         
-         
-            <Label  Padding="1" Content="Status:" Template="{StaticResource LabelTemplate}"></Label>
-            <Border CornerRadius="100" BorderThickness="3"  Width="300">
-                <Expander Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="StatusSelectAllCheckbox" IsChecked="True" Click="StatusSelectAllCheckbox_Click"></CheckBox>
-                        </StackPanel>
-                        <ListBox Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" x:Name="StatusCombo" Style="{StaticResource ListCheckBoxStyle}" >
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox x:Name="ChckBox" IsChecked="{Binding Path=IsChecked}" Click="ChckBox_Click" >
-                                        <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=Description}"></TextBlock>
-                                    </CheckBox>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
                     </StackPanel>
-                   
-                </Expander>
-            </Border>
 
 
-            <Label  Content="Area:"  Template="{StaticResource LabelTemplate}"/>
-            <Border CornerRadius="100" BorderThickness="3" Width="300" >
-                <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" Margin="1,0,-1,0">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="AreaSelectAllCheckbox" IsChecked="True" Click="AreaSelectAllCheckbox_Click">
-                               
-                            </CheckBox>
+                </GroupBox>
+
+
+                <GroupBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <Label  VerticalAlignment="Center">CV Uploaded</Label>
+                        <Border CornerRadius="100" BorderThickness="3"  Width="210">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                <Label>All:</Label>
+                                <RadioButton VerticalAlignment="Center" x:Name="CvUploadedAll" IsChecked="True"></RadioButton>
+                                <Label>Yes:</Label>
+                                <RadioButton VerticalAlignment="Center" x:Name="CvUploadedYes" ></RadioButton>
+                                <Label>No:</Label>
+                                <RadioButton VerticalAlignment="Center" x:Name="CvUploadedNo" ></RadioButton>
+                            </StackPanel>
+
+                        </Border>
+
+                    </StackPanel>
+
+
+                </GroupBox>
+
+                <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="150" x:Name="FirstNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
+                        <Label>FirstName</Label>
+
+                    </StackPanel>
+                </Border>
+
+                <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="150" x:Name="LastNametxt" Style="{StaticResource TextBoxStyle}"></TextBox>
+                        <Label>LastName</Label>
+
+                    </StackPanel>
+                </Border>
+                <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="150" x:Name="Positiontxt" Style="{StaticResource TextBoxStyle}"></TextBox>
+                        <Label>Position</Label>
+                    </StackPanel>
+                </Border>
+
+
+                <Label  Padding="1" Content="Status:" Template="{StaticResource LabelTemplate}"></Label>
+                <Border CornerRadius="100" BorderThickness="3"  Width="300">
+                    <Expander Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label  Content="Select All:"></Label>
+                                <CheckBox VerticalAlignment="Center" x:Name="StatusSelectAllCheckbox" IsChecked="True" Click="StatusSelectAllCheckbox_Click"></CheckBox>
+                            </StackPanel>
+                            <ListBox Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" x:Name="StatusCombo" Style="{StaticResource ListCheckBoxStyle}" >
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox x:Name="ChckBox" IsChecked="{Binding Path=IsChecked}" Click="ChckBox_Click" >
+                                            <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=Description}"></TextBlock>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
-                        <ListBox Style="{StaticResource ListCheckBoxStyle}" 
+
+                    </Expander>
+                </Border>
+
+
+                <Label  Content="Area:"  Template="{StaticResource LabelTemplate}"/>
+                <Border CornerRadius="100" BorderThickness="3" Width="300" >
+                    <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" Margin="1,0,-1,0">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label  Content="Select All:"></Label>
+                                <CheckBox VerticalAlignment="Center" x:Name="AreaSelectAllCheckbox" IsChecked="True" Click="AreaSelectAllCheckbox_Click">
+
+                                </CheckBox>
+                            </StackPanel>
+                            <ListBox Style="{StaticResource ListCheckBoxStyle}" 
                                  x:Name="AreaCombo" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox x:Name="AreaChckBox" Click="AreaChckBox_Click" 
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox x:Name="AreaChckBox" Click="AreaChckBox_Click" 
                                                 IsChecked="{Binding Path=IsChecked}">
 
-                                        <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=AreaName}"></TextBlock>
-                                    </CheckBox>
-                                </DataTemplate>
+                                            <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Path=AreaName}"></TextBlock>
+                                        </CheckBox>
+                                    </DataTemplate>
 
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                    
-                </Expander>
-            </Border>
-
-            <Label  Padding="1" Content="Group:" Template="{StaticResource LabelTemplate}">
-            </Label>
-            <Border CornerRadius="100" BorderThickness="3" Width="300">
-                <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="GroupSelectAllCheckbox" IsChecked="True" Click="GroupSelectAllCheckbox_Click"></CheckBox>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
 
-                        <ListBox   x:Name="GroupList"  Style="{StaticResource ListCheckBoxStyle}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox Content="{Binding Path=Name}"  IsChecked="{Binding Path=IsChecked}" Click="CheckBox_Click" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                   
-                </Expander>
-            </Border>
+                    </Expander>
+                </Border>
 
-            <Label  Padding="1" Content="Project:" Template="{StaticResource LabelTemplate}"/>
-            <Border CornerRadius="100" BorderThickness="3" Width="300">
-                <Expander Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" >
-                            <TextBox  Style="{StaticResource TextBoxStyle}" x:Name="ProjectInPutText"  Width="150"  TextChanged="ProjectInPutText_TextChanged"></TextBox>
-                            <Label  Content="Select All:"></Label>
-                            <CheckBox VerticalAlignment="Center" x:Name="ProjectSelectAllCheckbox" IsChecked="True" Click="ProjectSelectAllCheckbox_Click"></CheckBox>
+                <Label  Padding="1" Content="Group:" Template="{StaticResource LabelTemplate}">
+                </Label>
+                <Border CornerRadius="100" BorderThickness="3" Width="300">
+                    <Expander  Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label  Content="Select All:"></Label>
+                                <CheckBox VerticalAlignment="Center" x:Name="GroupSelectAllCheckbox" IsChecked="True" Click="GroupSelectAllCheckbox_Click"></CheckBox>
+                            </StackPanel>
+
+                            <ListBox   x:Name="GroupList"  Style="{StaticResource ListCheckBoxStyle}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Path=Name}"  IsChecked="{Binding Path=IsChecked}" Click="CheckBox_Click" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </StackPanel>
-                        <ListBox  MaxHeight="250" 
-                                    x:Name="ProjectList"  Style="{StaticResource ListCheckBoxStyle}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.IsDeferredScrollingEnabled="True">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox x:Name="ProjectCheckbox" Content="{Binding Path=ProjectName}" IsChecked="{Binding Path=IsChecked}" Click="ProjectCheckbox_Click" />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
-                   
-                </Expander> 
-            </Border>
-               
-        </StackPanel>
-        
-        <DataGrid  Grid.Row="0" Grid.Column="1"  x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" 
+
+                    </Expander>
+                </Border>
+
+                <Label  Padding="1" Content="Project:" Template="{StaticResource LabelTemplate}"/>
+                <Border CornerRadius="100" BorderThickness="3" Width="300">
+                    <Expander Background="CadetBlue" Width="{Binding RelativeSource={RelativeSource TemplatedParent},Path=ActualWidth}" MaxWidth="300">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBox  Style="{StaticResource TextBoxStyle}" x:Name="ProjectInPutText"  Width="150"  TextChanged="ProjectInPutText_TextChanged"></TextBox>
+                                <Label  Content="Select All:"></Label>
+                                <CheckBox VerticalAlignment="Center" x:Name="ProjectSelectAllCheckbox" IsChecked="True" Click="ProjectSelectAllCheckbox_Click"></CheckBox>
+                            </StackPanel>
+                            <ListBox  MaxHeight="250" 
+                                    x:Name="ProjectList"  Style="{StaticResource ListCheckBoxStyle}" 
+                                      ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.IsDeferredScrollingEnabled="True">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox x:Name="ProjectCheckbox" Content="{Binding Path=ProjectName}" IsChecked="{Binding Path=IsChecked}" Click="ProjectCheckbox_Click" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+
+                    </Expander>
+                </Border>
+
+            </StackPanel>
+
+            <DataGrid  Grid.Row="0" Grid.Column="1"  x:Name="MainView" Style="{StaticResource ResourceKey=DataGridStyle}" 
                    SelectionMode="Extended"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanUserResizeColumns="False" 
                    AutoGenerateColumns="False"  >
-            
-            <DataGrid.ContextMenu>
-                <ContextMenu x:Name="ContextMenu"  Opened="ContextMenu_Opened">
 
-                    <MenuItem x:Name="readMenuItem" Click="readMenuItem_Click" >
-                        <MenuItem.Icon>
-                            <Image Source="magnifying_glass.ico"/>
-                        </MenuItem.Icon>
-                        Read CV</MenuItem>
-                    <MenuItem x:Name="attachMenuItem" Click="attachMenuItem_Click" >
-                        <MenuItem.Icon>
-                            <Image Source="clip.ico"/>
-                        </MenuItem.Icon>
-                        Attach CV
-                    </MenuItem>
-                    <MenuItem x:Name="removeMenuItem" Click="removeMenuItem_Click" >
-                        <MenuItem.Icon>
-                            <Image Source="removeIcon.ico"/>
-                        </MenuItem.Icon>
-                        Remove CV
-                    </MenuItem>
-                    
-                    
-                </ContextMenu>
-            </DataGrid.ContextMenu>
-            
-            <DataGrid.Columns >
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="SizeToCells" />
-                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="SizeToCells" />
-                <DataGridTextColumn Header="First Email" Binding="{Binding FirstEmail}" Width="SizeToCells" />
-                <DataGridTextColumn Header="Second Email" Binding="{Binding SecondEmail}" Width="SizeToCells" />
-                <DataGridTextColumn Header="First Phone" Binding="{Binding FirstPhone}" Width="SizeToCells" />
-                <DataGridTextColumn Header="Second Phone" Binding="{Binding SecondPhone}" Width="*" />
-            </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Border Grid.Column="0" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                            <CheckBox Margin="2,10,2,0"  IsHitTestVisible="False"
+                <DataGrid.ContextMenu>
+                    <ContextMenu x:Name="ContextMenu"  Opened="ContextMenu_Opened">
+                        <MenuItem x:Name="readDetailsItem" Click="readDetailsItem_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="choose.png"/>
+                            </MenuItem.Icon>
+                            View Candidate details
+                        </MenuItem>
+                        <MenuItem x:Name="readMenuItem" Click="readMenuItem_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="magnifying_glass.ico"/>
+                            </MenuItem.Icon>
+                            Read CV
+                        </MenuItem>
+                        <MenuItem x:Name="attachMenuItem" Click="attachMenuItem_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="clip.ico"/>
+                            </MenuItem.Icon>
+                            Attach CV
+                        </MenuItem>
+                        <MenuItem x:Name="removeMenuItem" Click="removeMenuItem_Click" >
+                            <MenuItem.Icon>
+                                <Image Source="removeIcon.ico"/>
+                            </MenuItem.Icon>
+                            Remove CV
+                        </MenuItem>
+
+
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+
+                <DataGrid.Columns >
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="Auto" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="Auto" />
+                    <DataGridTextColumn Header="First Email" Binding="{Binding FirstEmail}" Width="Auto" />
+                    <DataGridTextColumn Header="Second Email" Binding="{Binding SecondEmail}" Width="Auto" />
+                    <DataGridTextColumn Header="First Phone" Binding="{Binding FirstPhone}" Width="Auto" />
+                    <DataGridTextColumn Header="Second Phone" Binding="{Binding SecondPhone}" Width="Auto" />
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate >
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Column="0" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <CheckBox Margin="2,10,2,0"  IsHitTestVisible="False"
                                       Background="Beige" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                       Content="CV Received?" IsChecked="{Binding IsCvReceived}"></CheckBox>
-                        </Border>
+                            </Border>
 
-                        <Border Grid.Column="1" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1">
-                            <TextBlock Background="Beige" Padding="5" TextWrapping="Wrap"
+                            <Border Grid.Column="1" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1">
+                                <TextBlock Background="Beige" Padding="5" TextWrapping="Wrap"
                                        Width="120" Text="{Binding AttendedProjects, StringFormat =Attended Projects: {0}}" ></TextBlock>
-                        </Border>
+                            </Border>
 
-                        <Border Grid.Column="2" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                            <CheckBox Margin="2,10,2,0"  IsHitTestVisible="False"
+                            <Border Grid.Column="2" Grid.Row="0" Margin="1" BorderBrush="Gray" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                                <CheckBox Margin="2,10,2,0"  IsHitTestVisible="False"
                                       Background="Beige" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center"
                                       Content="CV Uploaded?" IsChecked="{Binding IsCvUploaded}"></CheckBox>
-                        </Border>
-                    </Grid>
-                                       
-                </DataTemplate>
+                            </Border>
+                        </Grid>
 
-            </DataGrid.RowDetailsTemplate>
-        </DataGrid>
-        
-        <StatusBar Grid.Row="1" Grid.Column="1">
-            <TextBlock Margin="5">Font Size:</TextBlock>
-            <Label Content="{Binding ElementName=FonSizeSlider, Path=Value }" ContentStringFormat="{}{0:#}"></Label>
-            <Slider Width="100" Minimum="10" Maximum="15" x:Name="FonSizeSlider" Value="{Binding ElementName=MainView, Path=FontSize}"></Slider>
-            <TextBlock Margin="5">Records Found:</TextBlock>
-            <Label Content="{Binding ElementName=MainView, Path=Items.Count}" ></Label>
-            <TextBlock Margin="5">Selected Rows:</TextBlock>
-            <Label Content="{Binding ElementName=MainView, Path=SelectedItems.Count}" ></Label>
-        </StatusBar>
-    </Grid>
+                    </DataTemplate>
+
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+
+            <StatusBar Grid.Row="1" Grid.Column="1">
+                <TextBlock Margin="5">Font Size:</TextBlock>
+                <Label Content="{Binding ElementName=FonSizeSlider, Path=Value }" ContentStringFormat="{}{0:#}"></Label>
+                <Slider Width="100" Minimum="10" Maximum="15" x:Name="FonSizeSlider" Value="{Binding ElementName=MainView, Path=FontSize}"></Slider>
+                <TextBlock Margin="5">Records Found:</TextBlock>
+                <Label Content="{Binding ElementName=MainView, Path=Items.Count}" ></Label>
+                <TextBlock Margin="5">Selected Rows:</TextBlock>
+                <Label Content="{Binding ElementName=MainView, Path=SelectedItems.Count}" ></Label>
+            </StatusBar>
+        </Grid>
+
+    </DockPanel>
+
     
 </Window>

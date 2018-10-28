@@ -1,0 +1,56 @@
+﻿<Window x:Class="CandidatesBrowser2.CandididateDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CandidatesBrowser2"
+        
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        mc:Ignorable="d"
+         Height="600" Width="700"
+        >
+    <Window.Resources>
+        <local:Candidate x:Key="Can"/>
+    </Window.Resources>
+    <Grid Margin="5" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"  ></RowDefinition>
+            <RowDefinition Height="*" ></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" Background="AliceBlue">
+            <WrapPanel x:Name="mainStackPanel">
+                <TextBox Style="{StaticResource txtBoxStyledetails}" x:Name="firstNametxt" Width="100" ></TextBox>
+                <TextBox Style="{StaticResource txtBoxStyledetails}" x:Name="lastNametxt" Width="200"></TextBox>
+                <TextBox Style="{StaticResource txtBoxStyledetails}" x:Name="firstEmailtxt" Width="200"></TextBox>
+                <TextBox Style="{StaticResource txtBoxStyledetails}" x:Name="secondEmailtxt" Width="200"></TextBox>
+                <TextBox Style="{StaticResource txtBoxStyledetails}" x:Name="firstPhonetxt" Width="200"></TextBox>
+                <TextBox Style="{StaticResource txtBoxStyledetails}" x:Name="secondPhonetxt" Width="200"></TextBox>
+              
+            </WrapPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1">
+            <Label Background="Blue">Projects:</Label>
+            <ListView x:Name="projectsListbox">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        
+                            <TextBlock Text="{Binding Path=ProjectName}" />
+                       
+                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Background="Blue" >Positions:</Label>
+            <ListView x:Name="positionsLst">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                       
+                            <TextBlock Text="{Binding Path=Position}"/>
+                       
+                       
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>

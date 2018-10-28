@@ -59,10 +59,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CandididateDetailsWindow.xaml.cs">
+      <DependentUpon>CandididateDetailsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PasswordWindow..xaml.cs">
       <DependentUpon>PasswordWindow..xaml</DependentUpon>
     </Compile>
     <Compile Include="SQLs.cs" />
+    <Page Include="CandididateDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +146,15 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="Microsoft.Office.Interop.Word">
       <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>8</VersionMajor>
@@ -157,6 +173,14 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="excel.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="choose.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
